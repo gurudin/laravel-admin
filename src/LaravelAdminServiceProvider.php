@@ -33,6 +33,14 @@ class LaravelAdminServiceProvider extends ServiceProvider
 
         /** Add views */
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'admin');
+
+        /** Add migrations */
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+        /** Publishes static resources */
+        $this->publishes([
+            __DIR__ . '/../public' => public_path('vendor/gurudin'),
+        ], 'gurudin-admin');
     }
 
     /**
