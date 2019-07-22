@@ -1,0 +1,11 @@
+{
+    "name": "gurudin/laravel-admin",
+    "description": "admin",
+    "authors": [
+        {
+            "name": "gaoxiang",
+            "email": "4008353@qq.com"
+        }
+    ],
+    "require": {}
+}
