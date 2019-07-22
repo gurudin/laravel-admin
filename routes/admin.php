@@ -6,5 +6,8 @@ Route::prefix('admin')->group(function () {
         });
     });
 
-    Route::get('login', 'LoginController@login')->name('admin.login');
+    Route::group(['namespace' => 'Controllers'], function () {
+        Route::get('login', 'LoginController@loginFrom')->name('admin.login');
+    });
+
 });

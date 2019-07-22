@@ -8,7 +8,18 @@ use Illuminate\Support\Facades\Cache;
 
 class AdminAuthPermission
 {
-    private $redirectTo = 'LoginController@login';
+    private $redirectTo = '\Gurudin\LaravelAdmin\Controllers\LoginController@loginFrom';
+
+    private $current;
+
+    public function __construct()
+    {
+        $this->current = [
+            'method' => Route::current()->methods,
+            'uri'    => Route::current()->uri,
+            'name'   => Route::currentRouteName(),
+        ];
+    }
 
     /**
      * Handle an incoming request.
@@ -21,7 +32,7 @@ class AdminAuthPermission
     public function handle(\Illuminate\Http\Request $request, Closure $next)
     {
         if (!Auth::check()) {
-            return redirect()->action($this->redirectTo);
+            return redirect()->action($this->redirectTo, ['source' => $this->current['uri']]);
         }
 
         return $next($request);

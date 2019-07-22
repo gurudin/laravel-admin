@@ -30,6 +30,9 @@ class LaravelAdminServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(__DIR__ . '/../routes/admin.php');
+
+        /** Add views */
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'admin');
     }
 
     /**
