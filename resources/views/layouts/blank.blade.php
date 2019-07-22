@@ -11,6 +11,8 @@
   <title>@yield('title') {{ config('app.name', '') }}</title>
   
   @yield('css')
+
+  <link href="{{ URL::asset('css/custom.css?v='. time()) }}" rel="stylesheet">
 </head>
 <body>
   
