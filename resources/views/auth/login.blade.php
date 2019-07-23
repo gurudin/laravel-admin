@@ -30,30 +30,39 @@ Login
 
               <div class="form-group">
                 <label>Email</label>
-                <input type="text" placeholder="Enter your email" autofocus class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="4008353@qq.com">
-                @if ($errors->has('email'))
+                <input type="text"
+                  placeholder="Enter your email"
+                  autofocus
+                  class="form-control @error('email') is-invalid @enderror"
+                  name="email"
+                  value="admin@admin.com">
+                @error('email')
                   <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('email') }}</strong>
+                    <strong>{{ $message }}</strong>
                   </span>
-                @endif
+                @enderror
               </div>
               
               <div class="form-group">
                 <label for="password" class="">Password</label>
-                <input type="password" placeholder="Enter your password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" value="gaoxiang">
-                @if ($errors->has('password'))
+                <input type="password"
+                  placeholder="Enter your password"
+                  class="form-control @error('password') is-invalid @enderror"
+                  name="password"
+                  value="admin123">
+                @error('password')
                   <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('password') }}</strong>
+                    <strong>{{ $message }}</strong>
                   </span>
-                @endif
+                @enderror
               </div>
               
               <div class="form-group">
                 <button class="btn btn-light-success">Submit</button>
               </div>
               <p>
-                <strong>Email:</strong> 4008353@qq.com &nbsp;&nbsp;
-                <strong>Password:</strong> gaoxiang
+                <strong>Email:</strong> admin@admin.com &nbsp;&nbsp;
+                <strong>Password:</strong> admin123
               </p>
             </form>
           </div>

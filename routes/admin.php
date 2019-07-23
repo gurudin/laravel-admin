@@ -1,9 +1,7 @@
 <?php
 Route::prefix('admin')->group(function () {
     Route::group(['namespace' => 'Controllers', 'middleware' => ['admin']], function () {
-        Route::get('welcome', function () {
-            return 'Welcome';
-        })->name('admin.welcome');
+        Route::get('welcome', 'SiteController@welcome')->name('admin.welcome');
     });
 
     Route::group(['namespace' => 'Controllers'], function () {

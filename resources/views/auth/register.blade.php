@@ -57,9 +57,6 @@ Login
               
               <div class="form-group">
                 <label>Password</label>
-                <a href="/account/forget-password" class="text-muted float-right">
-                  <small>Forgot your password?</small>
-                </a>
                 <input type="password"
                   placeholder="Enter your password"
                   name="password"
