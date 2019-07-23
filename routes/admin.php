@@ -8,7 +8,7 @@ Route::prefix('admin')->group(function () {
         Route::get('login', 'LoginController@loginFrom')->name('admin.login');
         Route::post('login', 'LoginController@login')->name('admin.post.login');
 
-        Route::get('loginOut', 'LoginController@loginOut')->name('admin.loginOut');
+        Route::get('logout', 'LoginController@logout')->name('admin.logout');
 
         Route::get('register', 'RegisterController@registerFrom')->name('admin.register');
         Route::post('register', 'RegisterController@register')->name('admin.post.register');

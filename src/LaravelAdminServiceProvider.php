@@ -41,6 +41,10 @@ class LaravelAdminServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../public' => public_path('vendor/gurudin'),
         ], 'gurudin-admin');
+
+        $this->publishes([
+            __DIR__ . '/../config/admin.php' => config_path('admin.php'),
+        ], 'gurudin-admin-config');
     }
 
     /**

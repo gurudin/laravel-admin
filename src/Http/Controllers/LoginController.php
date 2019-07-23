@@ -65,7 +65,7 @@ class LoginController extends BaseController
      * 
      * @return mixed
      */
-    public function loginOut(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
 

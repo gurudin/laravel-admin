@@ -17,6 +17,6 @@ class SiteController extends Controller
      */
     public function welcome(Request $request)
     {
-        return view('admin::welcome');
+        return view(config('admin.welcome_view'));
     }
 }

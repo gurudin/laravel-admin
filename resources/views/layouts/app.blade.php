@@ -27,7 +27,7 @@
           <div class="input-group input-group-sm">
             <input type="text" class="form-control" placeholder="MeMe ID..." ref="searchUserId">
             <div class="input-group-append">
-              <button class="btn btn-secondary" type="button">
+              <button class="btn btn-light-primary" type="button">
                 <i class="fa fa-search"></i>
               </button>
             </div>
@@ -35,16 +35,19 @@
         </li>
   
         <li class="nav-item float-right">
-          <a class="nav-link text-secondary currsor">
+          <a class="nav-link text-secondary currsor" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Admin
-            <i class="fas fa-sign-out-alt"></i>
+            <i class="fa fa-caret-down"></i>
           </a>
-        </li>
-
-        <li class="nav-item float-right">
-          <a class="nav-link text-secondary currsor">
-            <i class="fa fa-compress-arrows-alt"></i>
-          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-size: 13px;">
+            <h6 class="dropdown-header text-dark">Welcome !</h6>
+            <a class="dropdown-item text-secondary" href="#">
+              <i class="fa fa-cog"></i>&nbsp;&nbsp;Settings
+            </a>
+            <a class="dropdown-item text-secondary" href="{{ route('admin.logout') }}">
+              <i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Logout
+            </a>
+          </div>
         </li>
 
         <li class="nav-item float-right">
@@ -52,6 +55,13 @@
             <i class="fa fa-globe"></i>
             DEFAULT
             <span class="fa fa-angle-down"></span>
+          </a>
+        </li>
+
+        <li class="nav-item float-right">
+          <a class="nav-link text-secondary currsor">
+            <i class="fa fa-expand-arrows-alt"></i>
+            {{-- <i class="fa fa-compress-arrows-alt"></i> --}}
           </a>
         </li>
       </ul>
@@ -151,22 +161,59 @@
 
             <li class="lay-menu-item">
               <a href="">
-                <i class="fa fa-cubes"></i>
-                <cite>App Config</cite>
+                <i class="fa fa-sliders-h"></i>
+                <cite>System & Permission</cite>
                 <span class="fa fa-caret-down"></span>
               </a>
-              <dl class="lay-nav-child" style="display: none;">
+              <dl class="lay-nav-child" style="display: block;">
                 <dd>
                   <a href="javascript:;" class="uri-to">
-                    <cite>Agents</cite>
-                    <span></span>
+                    <i class="fa"></i>
+                    <cite>Menu</cite>
+                    <span class="fa fa-caret-down"></span>
                   </a>
+                  <dl class="lay-nav-child" style="display: block;">
+                    <dd>
+                      <a href="javascript:;" class="uri-to">
+                        <i class="fa"></i>
+                        <cite>List</cite>
+                      </a>
+                    </dd>
+                    <dd>
+                      <a href="javascript:;" class="uri-to">
+                        <i class="fa"></i>
+                        <cite>Create</cite>
+                      </a>
+                    </dd>
+                  </dl>
                 </dd>
                 <dd>
                   <a href="javascript:;" class="uri-to">
-                    <cite>Article Management</cite>
-                    <span></span>
+                    <i class="fa"></i>
+                    <cite>Permissions</cite>
+                    <span class="fa fa-caret-down"></span>
                   </a>
+
+                  <dl class="lay-nav-child" style="display: block;">
+                    <dd>
+                      <a href="javascript:;" class="uri-to">
+                        <i class="fa"></i>
+                        <cite>Routes</cite>
+                      </a>
+                    </dd>
+                    <dd>
+                      <a href="javascript:;" class="uri-to">
+                        <i class="fa"></i>
+                        <cite>Permission</cite>
+                      </a>
+                    </dd>
+                    <dd>
+                      <a href="javascript:;" class="uri-to">
+                        <i class="fa"></i>
+                        <cite>Role</cite>
+                      </a>
+                    </dd>
+                  </dl>
                 </dd>
               </dl>
             </li>
@@ -176,12 +223,11 @@
     </div>
 
     <div class="lay-body left-220">
-111
+      @yield('content')
     </div>
   </div>
   
-  @yield('content')
-
+  <script src="{{ URL::asset('vendor/gurudin/js/admin.js') }}"></script> 
   @yield('script')
 </body>
 </html>
