@@ -14,4 +14,23 @@ class Controller extends BaseController
     {
         $this->middleware('admin');
     }
+
+    /**
+     * Ajax response
+     *
+     * @param bool $status
+     * @param array $data = []
+     * @param string $msg = ''
+     * @param int $header_code = 200
+     *
+     * @return Json
+     */
+    protected function response(bool $status, string $msg = 'success', array $data = [], int $header_code = 200)
+    {
+        return response()->json([
+            'status' => $status,
+            'msg'    => $msg,
+            'data'   => $data
+        ], $header_code);
+    }
 }

@@ -196,7 +196,7 @@
 
                   <dl class="lay-nav-child" style="display: block;">
                     <dd>
-                      <a href="javascript:;" class="uri-to">
+                      <a href="{{ route('admin.route') }}" class="uri-to">
                         <i class="fa"></i>
                         <cite>Routes</cite>
                       </a>

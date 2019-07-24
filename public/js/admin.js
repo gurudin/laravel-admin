@@ -36767,6 +36767,22 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+(function ($) {
+  var loadingDefaultValue = '';
+
+  $.fn.loading = function () {
+    var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    text == '' ? text = 'loading...' : text;
+
+    if (text == 'reset') {
+      this.removeClass('disabled').attr('disabled', false).html(loadingDefaultValue);
+    } else {
+      loadingDefaultValue = this[0].innerHTML;
+      this.addClass('disabled').attr('disabled', true).html(text);
+    }
+  };
+})(jQuery);
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

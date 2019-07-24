@@ -4,8 +4,11 @@ Route::prefix('admin')->group(function () {
         Route::get('welcome', 'SiteController@welcome')->name('admin.welcome');
 
         Route::get('menu', 'MenuController@index')->name('admin.menu');
-
         Route::get('menu/save/{id?}', 'MenuController@save')->name('admin.menu.save');
+
+        Route::get('route', 'RouteController@index')->name('admin.route');
+        Route::post('route', 'RouteController@create')->name('admin.post.route.create');
+        Route::delete('route', 'RouteController@destroy')->name('admin.delete.route.destroy');
     });
 
     Route::group(['namespace' => 'Controllers'], function () {
