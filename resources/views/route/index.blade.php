@@ -20,7 +20,7 @@ Routes
 <div class="col-12" id="app">
   <div class="col-body rounded-sm">
     <div class="row">
-      <div class="col-5">
+      <div class="col">
         <input type="text" placeholder="Search for available" v-model.trim="searchKey.available" class="form-control multiple-input">
         <select multiple class="form-control multiple-select" v-model="active.available">
           <option v-for="item in availableData" :value="item">[@{{item.method.toUpperCase()}}] &nbsp; @{{item.name}}</option>
@@ -33,7 +33,7 @@ Routes
         <button type="button" class="btn btn-danger" @click="removeRoutes"><i class="fa fa-angle-double-left"></i></button>
       </div>
 
-      <div class="col-5">
+      <div class="col">
         <input type="text" placeholder="Search for assigned" v-model.trim="searchKey.assigned" class="form-control multiple-input">
         <select multiple class="form-control multiple-select" v-model="active.assigned">
           <option v-for="item in assignedData" :value="item">[@{{item.method.toUpperCase()}}] &nbsp; @{{item.name}}</option>

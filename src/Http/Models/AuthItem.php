@@ -89,6 +89,7 @@ class AuthItem extends Model
         if ($count == 0) {
             return true;
         }
+        
         $m = new AuthItemChild;
         if ($type == self::TYPE_ROLE) {
             $m->removeItemChild(['parent' => $data['name'], 'method' => ($data['method'] ? $data['method'] : '')]);
@@ -97,5 +98,35 @@ class AuthItem extends Model
         }
         
         return $this->where(['name' => $data['name'], 'method' => ($data['method'] ? $data['method'] : '')])->delete();
+    }
+
+    /**
+     * Set item
+     *
+     * @return bool
+     */
+    public function setItem(array $data)
+    {
+        if ($data['type'] == 'create') {
+            $this->name        = $data['new']['name'];
+            $this->method      = $data['new']['method'] ? $data['new']['method'] : '';
+            $this->type        = $data['new']['type'];
+            $this->description = isset($data['new']['description']) ? $data['new']['description'] : null;
+
+            return $this->save() ? true : false;
+        } else {
+            $result = $this->where([
+                'name'   => $data['old']['name'],
+                'method' => $data['old']['method'] ? $data['old']['method'] : '',
+                'type'   => $data['old']['type']
+            ])->update([
+                'name'        => $data['new']['name'],
+                'method'      => $data['new']['method'] ? $data['new']['method'] : '',
+                'type'        => $data['new']['type'],
+                'description' => isset($data['new']['description']) ? $data['new']['description'] : null,
+            ]);
+    
+            return $result ? true : false;
+        }
     }
 }

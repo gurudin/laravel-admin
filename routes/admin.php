@@ -9,6 +9,14 @@ Route::prefix('admin')->group(function () {
         Route::get('route', 'RouteController@index')->name('admin.route');
         Route::post('route', 'RouteController@create')->name('admin.post.route.create');
         Route::delete('route', 'RouteController@destroy')->name('admin.delete.route.destroy');
+
+        Route::get('permission', 'PermissionController@index')->name('admin.permission');
+        Route::post('permission', 'PermissionController@save')->name('admin.post.permission.save');
+        Route::delete('permission', 'PermissionController@destroy')->name('admin.delete.permission.destroy');
+        Route::get('permission/view/{name?}', 'PermissionController@view')->name('admin.permission.view');
+        Route::post('batchPermission', 'PermissionController@batchCreateRouteChild')->name('admin.post.permission.batchRouteChild');
+        Route::delete('batchPermission', 'PermissionController@batchRemoveRouteChild')->name('admin.delete.permission.batchRouteChild');
+
     });
 
     Route::group(['namespace' => 'Controllers'], function () {

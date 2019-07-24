@@ -202,7 +202,7 @@
                       </a>
                     </dd>
                     <dd>
-                      <a href="javascript:;" class="uri-to">
+                      <a href="{{ route('admin.permission') }}" class="uri-to">
                         <i class="fa"></i>
                         <cite>Permission</cite>
                       </a>
@@ -222,7 +222,7 @@
       </div>
     </div>
 
-    <div class="lay-body left-220">
+    <div class="lay-body padding-left-220">
       @yield('content')
     </div>
   </div>
