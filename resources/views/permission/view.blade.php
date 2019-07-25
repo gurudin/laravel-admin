@@ -1,7 +1,7 @@
 @extends(config('admin.extends_blade'))
 
 @section('title')
-Permissions
+{{__('admin::messages.permission.permissions')}}
 @endsection
 
 @section('css')
@@ -11,10 +11,10 @@ Permissions
 @section('content')
 <div class="col col-header">
   <div class="float-left">
-    <h5 class="text-monospace">Permission: {{ $name }}</h5>
+    <h5 class="text-monospace">{{__('admin::messages.permission.permissions')}}: {{ $name }}</h5>
   </div>
   <div class="float-right text-monospace">
-    <a href="{{ route('admin.permission') }}" class="text-dark"><i class="fa fa-angle-left"></i> Back</a>
+    <a href="{{ route('admin.permission') }}" class="text-dark"><i class="fa fa-angle-left"></i> {{__('admin::messages.common.back')}}</a>
   </div>
 </div>
 
@@ -23,7 +23,7 @@ Permissions
     <div class="row">
         <div class="col">
           <div class="form-group">
-            <input type="text" class="form-control multiple-input" v-model="searchKey.route" placeholder="search-for-routes">
+            <input type="text" class="form-control multiple-input" v-model="searchKey.route" placeholder="{{__('admin::messages.permission.search-for-routes')}}">
             <select multiple class="form-control multiple-select" size="20" ref="select-route">
               <optgroup label="Routes">
                 <option v-for="route in routeData" :value="route.method+' '+route.name">@{{route.method.toUpperCase()}} @{{route.name}}</option>
@@ -40,7 +40,7 @@ Permissions
     
         <div class="col">
           <div class="form-group">
-            <input type="text" class="form-control multiple-input" v-model="searchKey.permission" placeholder="search-for-assigned">
+            <input type="text" class="form-control multiple-input" v-model="searchKey.permission" placeholder="{{__('admin::messages.permission.search-for-assigned')}}">
             <select multiple class="form-control multiple-select" size="20" ref="select-assigned">
               <optgroup label="Routes">
                 <option v-for="route in permissionRouteData" :value="route.method+' '+route.child">@{{route.method.toUpperCase()}} @{{route.child}}</option>
@@ -136,7 +136,7 @@ const vm = new Vue({
             });
           });
         } else {
-          alert(res.body.msg);
+          alert(response.data.msg);
         }
         $btn.loading("reset");
       });
@@ -165,7 +165,7 @@ const vm = new Vue({
             }
           }
         } else {
-          alert(res.body.msg);
+          alert(response.data.msg);
         }
         $btn.loading("reset");
       });

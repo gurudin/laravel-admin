@@ -1,7 +1,7 @@
 @extends(config('admin.extends_blade'))
 
 @section('title')
-Permissions
+{{__('admin::messages.permission.permissions')}}
 @endsection
 
 @section('css')
@@ -11,10 +11,10 @@ Permissions
 @section('content')
 <div class="col col-header">
   <div class="float-left">
-    <h5 class="text-monospace">Permissions</h5>
+    <h5 class="text-monospace">{{__('admin::messages.permission.permissions')}}</h5>
   </div>
   <div class="float-right text-monospace">
-    <button @click="openModal('create')" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Create</button>
+    <button @click="openModal('create')" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> {{__('admin::messages.common.create')}}</button>
   </div>
 </div>
 
@@ -38,26 +38,26 @@ Permissions
         </div>
         <div class="modal-body">
             <div class="form-group">
-              <label>Name</label>
+              <label>{{__('admin::messages.permission.name')}}</label>
               <input
                 type="text"
                 class="form-control"
                 maxlength="50"
                 v-model="modal.new.name"
                 :class="{'is-invalid': modal.isValid && modal.new.name==''}"
-                placeholder="Permission name">
+                placeholder="{{__('admin::messages.permission.textname')}}">
             </div>
 
             <div class="form-group">
-              <label>Description</label>
+              <label>{{__('admin::messages.permission.description')}}</label>
               <textarea class="form-control"
                 v-model="modal.new.description"
-                placeholder="Permission description"
+                placeholder="{{__('admin::messages.permission.textdescription')}}"
                 ></textarea>
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-light-success" @click="save">Save changes</button>
+          <button type="button" class="btn btn-light-success" @click="save">{{__('admin::messages.common.save')}}</button>
         </div>
       </div>
     </div>
@@ -77,9 +77,9 @@ const vm = new Vue({
       init: {
         options: @json($permissions),
         headings: {
-          name: 'Permission Name',
-          description: 'Description',
-          action: 'Action'
+          name: "{{__('admin::messages.permission.name')}}",
+          description: "{{__('admin::messages.permission.description')}}",
+          action: "{{__('admin::messages.common.action')}}"
         },
         settings: {
           description: {type: 'callback', func: this.descCall},
@@ -116,7 +116,7 @@ const vm = new Vue({
   },
   methods: {
     descCall(obj) {
-      return obj.value == null ? '<span class="text-muted">(not set)</span>' : obj.value;
+      return obj.value == null ? '<span class="text-muted">{{__("admin::messages.common.not-set")}}</span>' : obj.value;
     },
     openModal(type) {
       this.modal.type = type;
@@ -148,7 +148,7 @@ const vm = new Vue({
       });
     },
     callRemove(obj) {
-      if (!confirm('Are you sure to delete this item ?')) {
+      if (!confirm("{{__('admin::messages.common.are-you-sure-to-delete-this-item')}}")) {
         return false;
       }
 

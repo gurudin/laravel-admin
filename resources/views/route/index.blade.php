@@ -1,7 +1,7 @@
 @extends(config('admin.extends_blade'))
 
 @section('title')
-Routes
+{{__('admin::messages.route.route')}}
 @endsection
 
 @section('css')
@@ -11,7 +11,7 @@ Routes
 @section('content')
 <div class="col col-header">
   <div class="float-left">
-    <h5 class="text-monospace">Routes</h5>
+    <h5 class="text-monospace">{{__('admin::messages.route.route')}}</h5>
   </div>
   <div class="float-right text-monospace">
   </div>
@@ -21,7 +21,7 @@ Routes
   <div class="col-body rounded-sm">
     <div class="row">
       <div class="col">
-        <input type="text" placeholder="Search for available" v-model.trim="searchKey.available" class="form-control multiple-input">
+        <input type="text" placeholder="{{__('admin::messages.route.search-for-available')}}" v-model.trim="searchKey.available" class="form-control multiple-input">
         <select multiple class="form-control multiple-select" v-model="active.available">
           <option v-for="item in availableData" :value="item">[@{{item.method.toUpperCase()}}] &nbsp; @{{item.name}}</option>
         </select>
@@ -34,7 +34,7 @@ Routes
       </div>
 
       <div class="col">
-        <input type="text" placeholder="Search for assigned" v-model.trim="searchKey.assigned" class="form-control multiple-input">
+        <input type="text" placeholder="{{__('admin::messages.route.search-for-assigned')}}" v-model.trim="searchKey.assigned" class="form-control multiple-input">
         <select multiple class="form-control multiple-select" v-model="active.assigned">
           <option v-for="item in assignedData" :value="item">[@{{item.method.toUpperCase()}}] &nbsp; @{{item.name}}</option>
         </select>

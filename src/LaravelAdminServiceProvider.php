@@ -37,6 +37,9 @@ class LaravelAdminServiceProvider extends ServiceProvider
         /** Add migrations */
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
+        /** Add translations */
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'admin');
+
         /** Publishes static resources */
         $this->publishes([
             __DIR__ . '/../public' => public_path('vendor/gurudin'),
