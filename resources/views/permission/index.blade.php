@@ -20,10 +20,28 @@
 
 <div class="col-12">
   <div class="col-body rounded-sm">
-    <vue-tables
-    :headings="init.headings"
-    :settings="init.settings"
-    :options="init.options"></vue-tables>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">@lang('admin::messages.permission.name')</th>
+          <th scope="col">@lang('admin::messages.permission.description')</th>
+          <th scope="col">@lang('admin::messages.common.action')</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item,inx) in init.options">
+          <th>@{{inx + 1}}</th>
+          <td>@{{item.name}}</td>
+          <td v-html="item.description ? item.description : '<span class=\'text-muted\'>@lang("admin::messages.common.not-set")</span>'"></td>
+          <td>
+            <button class="btn btn-xs btn-info" @click="callView(item)"><i class="fa fa-eye"></i></button>
+            <button class="btn btn-xs btn-warning" @click="callEdit(item)"><i class="fa fa-edit"></i></button>
+            <button class="btn btn-xs btn-danger" @click="callRemove(item, inx)"><i class="fa fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- Save Modal -->
@@ -76,22 +94,6 @@ const vm = new Vue({
     return {
       init: {
         options: @json($permissions),
-        headings: {
-          name: "{{__('admin::messages.permission.name')}}",
-          description: "{{__('admin::messages.permission.description')}}",
-          action: "{{__('admin::messages.common.action')}}"
-        },
-        settings: {
-          description: {type: 'callback', func: this.descCall},
-          action: {
-            type: 'action',
-            actions: {
-              'view': {icon: 'fa fa-eye', class: 'btn-info', func: this.callView},
-              'edit': {icon: 'fa fa-edit', class: 'btn-warning', func: this.callEdit},
-              'remove': {icon: 'fa fa-trash-alt', class: 'btn-danger', func: this.callRemove},
-            }
-          }
-        }
       },
       modal: {
         type: 'create',
@@ -112,20 +114,16 @@ const vm = new Vue({
     };
   },
   computed: {
-    
   },
   methods: {
-    descCall(obj) {
-      return obj.value == null ? '<span class="text-muted">{{__("admin::messages.common.not-set")}}</span>' : obj.value;
-    },
     openModal(type) {
       this.modal.type = type;
       
       $('#saveModal').modal('show');
     },
     callEdit(obj) {
-      this.modal.old = obj.item;
-      this.modal.new = $.extend(true, {}, obj.item);
+      this.modal.old = obj;
+      this.modal.new = $.extend(true, {}, obj);
       this.openModal('update');
     },
     save(event) {
@@ -147,7 +145,7 @@ const vm = new Vue({
         }
       });
     },
-    callRemove(obj) {
+    callRemove(obj, inx) {
       if (!confirm("{{__('admin::messages.common.are-you-sure-to-delete-this-item')}}")) {
         return false;
       }
@@ -156,11 +154,11 @@ const vm = new Vue({
       var $btn = $(event.currentTarget);
       $btn.loading('<i class="fas fa-spinner fa-spin"></i>');
       axios.delete('{{route("admin.delete.permission.destroy")}}', { data: {
-        name: obj.item.name,
-        method: obj.item.method
+        name: obj.name,
+        method: obj.method
       }}).then(function (response) {
         if (response.data.status) {
-          _this.init.options.splice(obj.inx, 1);
+          _this.init.options.splice(inx, 1);
         } else {
           alert(response.data.msg);
         }
@@ -168,7 +166,7 @@ const vm = new Vue({
       });
     },
     callView(obj) {
-      window.location = new URL("{{ route('admin.permission.view') }}" + '/' + obj.item.name);
+      window.location = new URL("{{ route('admin.permission.view') }}" + '/' + obj.name);
     }
   }
 });

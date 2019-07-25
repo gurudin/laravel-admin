@@ -2,14 +2,11 @@
 namespace Gurudin\LaravelAdmin\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Gurudin\LaravelAdmin\Models\AuthItem;
 use Gurudin\LaravelAdmin\Models\AuthItemChild;
 
 class PermissionController extends Controller
 {
-    use ValidatesRequests;
-
     /**
      * (view) Permission list.
      * 

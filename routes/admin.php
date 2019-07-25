@@ -17,6 +17,11 @@ Route::prefix('admin')->group(function () {
         Route::post('batchPermission', 'PermissionController@batchCreateRouteChild')->name('admin.post.permission.batchRouteChild');
         Route::delete('batchPermission', 'PermissionController@batchRemoveRouteChild')->name('admin.delete.permission.batchRouteChild');
 
+        Route::get('role', 'RoleController@index')->name('admin.role');
+        Route::post('role', 'RoleController@create')->name('admin.post.role.create');
+        Route::put('role', 'RoleController@update')->name('admin.put.role.update');
+        Route::delete('role', 'RoleController@destroy')->name('admin.delete.role.destroy');
+        Route::get('role/view/{name?}', 'RoleController@view')->name('admin.role.view');
     });
 
     Route::group(['namespace' => 'Controllers'], function () {

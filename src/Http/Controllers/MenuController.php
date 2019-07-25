@@ -2,13 +2,10 @@
 namespace Gurudin\LaravelAdmin\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Gurudin\LaravelAdmin\Models\Menu;
 
 class MenuController extends Controller
 {
-    use ValidatesRequests;
-
     /**
      * Menu list.
      * 

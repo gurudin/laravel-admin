@@ -172,6 +172,13 @@
                     <cite>Menu</cite>
                     <span class="fa fa-caret-down"></span>
                   </a>
+                </dd>
+                <dd>
+                  <a href="javascript:;" class="uri-to">
+                    <i class="fa"></i>
+                    <cite>Menu</cite>
+                    <span class="fa fa-caret-down"></span>
+                  </a>
                   <dl class="lay-nav-child" style="display: block;">
                     <dd>
                       <a href="{{ route('admin.menu') }}" class="uri-to">
@@ -208,7 +215,7 @@
                       </a>
                     </dd>
                     <dd>
-                      <a href="javascript:;" class="uri-to">
+                      <a href="{{ route('admin.role') }}" class="uri-to">
                         <i class="fa"></i>
                         <cite>Role</cite>
                       </a>

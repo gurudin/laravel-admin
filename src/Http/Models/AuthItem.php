@@ -115,6 +115,12 @@ class AuthItem extends Model
 
             return $this->save() ? true : false;
         } else {
+            $child_res = (new AuthItemChild)->where([
+                'parent' => $data['old']['name']
+            ])->update([
+                'parent' => $data['new']['name']
+            ]);
+
             $result = $this->where([
                 'name'   => $data['old']['name'],
                 'method' => $data['old']['method'] ? $data['old']['method'] : '',
@@ -125,7 +131,7 @@ class AuthItem extends Model
                 'type'        => $data['new']['type'],
                 'description' => isset($data['new']['description']) ? $data['new']['description'] : null,
             ]);
-    
+
             return $result ? true : false;
         }
     }
