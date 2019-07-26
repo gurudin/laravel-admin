@@ -37,7 +37,7 @@ class AssignmentController extends Controller
      * @param Gurudin\Admin\Models\AuthItem $authItem
      * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment
      * @param Gurudin\LaravelAdmin\Models\User $user
-     * @param int $id
+     * @param string $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -54,6 +54,65 @@ class AssignmentController extends Controller
         $userDetail           = $user->getUser($id);
 
         return view('admin::assignment.view', compact('userDetail', 'items', 'assignments'));
+    }
+
+    /**
+     * (view) User edit.
+     *
+     * @param Illuminate\Http\Request $request
+     * @param Gurudin\LaravelAdmin\Models\User $user
+     * @param string $id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editView(Request $request, User $user, string $id)
+    {
+        $detail = $user->getUser($id);
+
+        return view('admin::assignment.edit', compact('detail'));
+    }
+
+    /**
+     * (put) User update.
+     *
+     * @param Illuminate\Http\Request $request
+     * @param Gurudin\LaravelAdmin\Models\User $user
+     *
+     * @return Json
+     */
+    public function update(Request $request, User $user)
+    {
+        $req = $request->all();
+        if ($req['type'] == 'nick') {
+            if (strlen($req['data']['name']) < 2) {
+                return $this->response(false, __('admin::messages.assignment.nick-length-error'));
+            }
+
+            if ($user->where(['id' => $req['data']['id']])->update([
+                'name' => $req['data']['name']
+            ])) {
+                return $this->response(true);
+            } else {
+                return $this->response(true, 'Failed to update.');
+            }
+        }
+
+        if ($req['type'] == 'password') {
+            if (strlen($req['data']['password']) < 6) {
+                return $this->response(false, __('admin::messages.assignment.password-length-error'));
+            }
+            if ($req['data']['password'] != $req['data']['c_password']) {
+                return $this->response(false, __('admin::messages.assignment.password-match-error'));
+            }
+
+            if ($user->where(['id' => $req['data']['id']])->update([
+                'password' => bcrypt($req['data']['password'])
+            ])) {
+                return $this->response(true);
+            } else {
+                return $this->response(true, 'Failed to update.');
+            }
+        }
     }
 
     /**

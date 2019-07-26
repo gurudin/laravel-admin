@@ -26,6 +26,7 @@ Route::prefix('admin')->group(function () {
         Route::get('assignment', 'AssignmentController@index')->name('admin.assignment');
         Route::delete('assignment', 'AssignmentController@destroy')->name('admin.delete.assignment.destroy');
         Route::get('assignment/edit/{id?}', 'AssignmentController@editView')->name('admin.assignment.update');
+        Route::put('assignment', 'AssignmentController@update')->name('admin.put.assignment.update');
         Route::get('assignment/view/{id?}', 'AssignmentController@view')->name('admin.assignment.view');
         Route::post('batchAssignment', 'AssignmentController@batchCreateAssignment')->name('admin.post.assignment.batchAssignment');
         Route::delete('batchAssignment', 'AssignmentController@batchRemoveAssignment')->name('admin.delete.assignment.batchAssignment');
