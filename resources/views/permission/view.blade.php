@@ -21,33 +21,33 @@
 <div class="col-12" id="app">
   <div class="col-body rounded-sm">
     <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <input type="text" class="form-control multiple-input" v-model="searchKey.route" placeholder="{{__('admin::messages.permission.search-for-routes')}}">
-            <select multiple class="form-control multiple-select" size="20" ref="select-route">
-              <optgroup label="Routes">
-                <option v-for="route in routeData" :value="route.method+' '+route.name">@{{route.method.toUpperCase()}} @{{route.name}}</option>
-              </optgroup>
-            </select>
-          </div>
+      <div class="col">
+        <div class="form-group">
+          <input type="text" class="form-control multiple-input" v-model="searchKey.route" placeholder="{{__('admin::messages.permission.search-for-routes')}}">
+          <select multiple class="form-control multiple-select" size="20" ref="select-route">
+            <optgroup label="Routes">
+              <option v-for="route in routeData" :value="route.method+' '+route.name">@{{route.method.toUpperCase()}} @{{route.name}}</option>
+            </optgroup>
+          </select>
         </div>
-    
-        <div class="col-1 text-center multiple-center">
-          <button type="button" class="btn btn-success" @click="addRoutes"><i class="fa fa-angle-double-right"></i></button>
-          <br><br>
-          <button type="button" class="btn btn-danger" @click="removeRoutes"><i class="fa fa-angle-double-left"></i></button>
+      </div>
+  
+      <div class="col-1 text-center multiple-center">
+        <button type="button" class="btn btn-success" @click="addRoutes"><i class="fa fa-angle-double-right"></i></button>
+        <br><br>
+        <button type="button" class="btn btn-danger" @click="removeRoutes"><i class="fa fa-angle-double-left"></i></button>
+      </div>
+  
+      <div class="col">
+        <div class="form-group">
+          <input type="text" class="form-control multiple-input" v-model="searchKey.permission" placeholder="{{__('admin::messages.permission.search-for-assigned')}}">
+          <select multiple class="form-control multiple-select" size="20" ref="select-assigned">
+            <optgroup label="Routes">
+              <option v-for="route in permissionRouteData" :value="route.method+' '+route.child">@{{route.method.toUpperCase()}} @{{route.child}}</option>
+            </optgroup>
+          </select>
         </div>
-    
-        <div class="col">
-          <div class="form-group">
-            <input type="text" class="form-control multiple-input" v-model="searchKey.permission" placeholder="{{__('admin::messages.permission.search-for-assigned')}}">
-            <select multiple class="form-control multiple-select" size="20" ref="select-assigned">
-              <optgroup label="Routes">
-                <option v-for="route in permissionRouteData" :value="route.method+' '+route.child">@{{route.method.toUpperCase()}} @{{route.child}}</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
+      </div>
     </div>
   </div>
 </div>

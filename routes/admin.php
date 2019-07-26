@@ -22,6 +22,11 @@ Route::prefix('admin')->group(function () {
         Route::put('role', 'RoleController@update')->name('admin.put.role.update');
         Route::delete('role', 'RoleController@destroy')->name('admin.delete.role.destroy');
         Route::get('role/view/{name?}', 'RoleController@view')->name('admin.role.view');
+
+        Route::get('assignment', 'AssignmentController@index')->name('admin.assignment');
+        Route::get('assignment/view/{id?}', 'AssignmentController@view')->name('admin.assignment.view');
+        Route::post('batchAssignment', 'AssignmentController@batchCreateAssignment')->name('admin.post.assignment.batchAssignment');
+        Route::delete('batchAssignment', 'AssignmentController@batchRemoveAssignment')->name('admin.delete.assignment.batchAssignment');
     });
 
     Route::group(['namespace' => 'Controllers'], function () {

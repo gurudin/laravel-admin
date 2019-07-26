@@ -28,4 +28,29 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get user item.
+     *
+     * @param string $id
+     *
+     * @return array
+     */
+    public function getUser(string $id = '')
+    {
+        if ($id == '') {
+            $result = [];
+            $this->select(['id', 'name', 'email', 'created_at'])
+                ->orderBy('id', 'asc')
+                ->chunk(100, function ($items) use (&$result) {
+                    foreach ($items as $item) {
+                        $result[] = $item->toArray();
+                    }
+                });
+        } else {
+            $result = $this->select(['id', 'name', 'email', 'created_at'])->where(['id' => $id])->first();
+        }
+        
+        return $result;
+    }
 }

@@ -31,6 +31,14 @@ return [
         "search-for-permission" => "检索权限",
         "search-for-assigned" => "检索权限"
     ],
+    "assignment" => [
+        "assignment" => "权限分配",
+        "nick" => "昵称",
+        "email" => "邮箱",
+        "administrator" => "超级管理员",
+        "permission" => "权限",
+        "search-for-permission" => "检索权限",
+    ],
     "menu" => [
         "menu" => "菜单",
         "create-menu" => "创建菜单",
@@ -40,14 +48,5 @@ return [
         "route" => "地址",
         "parent" => "父类名称",
         "data" => "Data"
-    ],
-    "assignment" => [
-        "assignment" => "权限分配",
-        "nick" => "昵称",
-        "email" => "邮箱",
-        "group" => "组",
-        "permission" => "权限",
-        "search-for-permission" => "检索权限",
-        "select-group" => "选择权限组"
     ],
 ];

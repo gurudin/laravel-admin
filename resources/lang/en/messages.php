@@ -32,6 +32,14 @@ return [
         "search-for-permission" => "Search for permission",
         "search-for-assigned" => "Search for assigned"
     ],
+    "assignment" => [
+        "assignment" => "Assignment",
+        "nick" => "Nick",
+        "email" => "Email",
+        "administrator" => "Administrator",
+        "permission" => "Permission",
+        "search-for-permission" => "Search for permission",
+    ],
     "menu" => [
         "menu" => "Menu",
         "create-menu" => "Create Menu",
@@ -41,14 +49,5 @@ return [
         "route" => "Route",
         "parent" => "Parent Name",
         "data" => "Data"
-    ],
-    "assignment" => [
-        "assignment" => "Assignment",
-        "nick" => "Nick",
-        "email" => "Email",
-        "group" => "Group",
-        "permission" => "Permission",
-        "search-for-permission" => "Search for permission",
-        "select-group" => "Select group"
     ],
 ];

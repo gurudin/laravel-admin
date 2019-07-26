@@ -27,6 +27,7 @@ class RoleController extends Controller
      *
      * @param Illuminate\Http\Request $request
      * @param Gurudin\Admin\Models\AuthItem $authItem
+     * @param Gurudin\LaravelAdmin\Models\AuthItemChild $authItemChild
      * @param string $name
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

@@ -86,7 +86,6 @@
 
 @section('script')
 <script src="{{ URL::asset('vendor/gurudin/js/vue-2.6.10.js') }}"></script>
-<script src="{{ URL::asset('vendor/gurudin/js/vue-tables.js') }}"></script>
 <script>
 const vm = new Vue({
   el: '.lay-body',

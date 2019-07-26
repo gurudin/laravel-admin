@@ -1,6 +1,6 @@
 <?php
 
-namespace Gurudin\Admin\Support;
+namespace Gurudin\LaravelAdmin\Support;
 
 use Illuminate\Support\Facades\Auth;
 use Gurudin\LaravelAdmin\Models\User;

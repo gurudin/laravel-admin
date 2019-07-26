@@ -167,10 +167,10 @@
               </a>
               <dl class="lay-nav-child" style="display: block;">
                 <dd>
-                  <a href="javascript:;" class="uri-to">
+                  <a href="{{ route('admin.assignment') }}" class="uri-to">
                     <i class="fa"></i>
-                    <cite>Menu</cite>
-                    <span class="fa fa-caret-down"></span>
+                    <cite>Assignments</cite>
+                    <span class="fa"></span>
                   </a>
                 </dd>
                 <dd>
