@@ -32,7 +32,7 @@ class RegisterController extends BaseController
     public function register(Request $request)
     {
         $this->validate($request, [
-            'name'       => 'required|min:4',
+            'name'       => 'required|min:2',
             'email'      => 'required|email|unique:users',
             'password'   => 'required|min:6',
             'c_password' => 'required|same:password',

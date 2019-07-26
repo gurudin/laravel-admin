@@ -36,7 +36,7 @@
   
         <li class="nav-item float-right">
           <a class="nav-link text-secondary currsor" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Admin
+            {{ Auth::user()->name }}
             <i class="fa fa-caret-down"></i>
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-size: 13px;">
@@ -169,7 +169,7 @@
                 <dd>
                   <a href="{{ route('admin.assignment') }}" class="uri-to">
                     <i class="fa"></i>
-                    <cite>Assignments</cite>
+                    <cite>Users</cite>
                     <span class="fa"></span>
                   </a>
                 </dd>

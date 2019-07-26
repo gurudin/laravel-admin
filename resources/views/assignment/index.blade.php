@@ -26,6 +26,7 @@
           <th scope="col">#</th>
           <th scope="col">@lang("admin::messages.assignment.nick")</th>
           <th scope="col">@lang('admin::messages.assignment.email')</th>
+          <th scope="col">@lang('admin::messages.assignment.created-at')</th>
           <th scope="col">@lang('admin::messages.common.action')</th>
         </tr>
       </thead>
@@ -35,14 +36,17 @@
           <th><input type="text" class="form-control" v-model.trim="searchKey.name"></th>
           <th><input type="text" class="form-control" v-model.trim="searchKey.email"></th>
           <th></th>
+          <th></th>
         </tr>
         <tr v-for="(user,inx) in usersData">
           <th scope="row">@{{ user.id }}</th>
           <td>@{{ user.name }}  <small class="text-muted" v-if="user.admin">(@lang('admin::messages.assignment.administrator'))</small></td>
           <td>@{{ user.email }}</td>
+          <td>@{{ user.created_at }}</td>
           <td>
-            <button class="btn btn-xs btn-info" :disabled="user.admin" @click="toView(user)"><i class="fa fa-eye"></i></button>
-            <button class="btn btn-xs btn-danger" :disabled="user.admin" @click="remove($event, user)"><i class="fa fa-trash-alt"></i></button>
+              <button class="btn btn-xs btn-info" :disabled="user.admin" @click="toView(user)"><i class="fa fa-eye"></i></button>
+              <button class="btn btn-xs btn-warning" :disabled="user.admin && user.id != '{{Auth::user()->id}}'" @click="toEdit(user)"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-xs btn-danger" :disabled="user.admin || user.id == '{{Auth::user()->id}}'" @click="remove($event, user)"><i class="fa fa-trash-alt"></i></button>
           </td>
         </tr>
       </tbody>
@@ -76,9 +80,23 @@ const vm = new Vue({
     toView(user) {
       window.location = new URL("{{ route('admin.assignment.view') }}/" + user.id);
     },
+    toEdit(user) {
+      window.location = new URL("{{ route('admin.assignment.update') }}/" + user.id);
+    },
     remove(event, user) {
-      console.log(user);
-      
+      if (!confirm("@lang('admin::messages.assignment.unrecoverable,-confirm-deletion')")) {
+        return false;
+      }
+
+      axios.delete('{{route("admin.delete.assignment.destroy")}}', { data: {
+        id: user.id,
+      }}).then(function (response) {
+        if (response.data.status) {
+          window.location.reload();
+        } else {
+          alert(response.data.msg);
+        }
+      });
     }
   }
 });

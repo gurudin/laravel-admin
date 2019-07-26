@@ -85,4 +85,20 @@ class AssignmentController extends Controller
             ? $this->response(true)
             : $this->response(false);
     }
+
+    /**
+     * (delete) Destroy user.
+     *
+     * @param Illuminate\Http\Request $request
+     * @param Gurudin\LaravelAdmin\Models\User $user
+     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment
+     *
+     * @return Json
+     */
+    public function destroy(Request $request, AuthAssignment $authAssignment, User $user)
+    {
+        return $user->removeUser($authAssignment, $request->all()['id'])
+            ? $this->response(true)
+            : $this->response(false, 'Failed to delete.');
+    }
 }

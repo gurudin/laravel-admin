@@ -3,6 +3,7 @@ namespace Gurudin\LaravelAdmin\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -52,5 +53,30 @@ class User extends Authenticatable
         }
         
         return $result;
+    }
+
+    /**
+     * Remove user.
+     *
+     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function removeUser(AuthAssignment $authAssignment, string $id)
+    {
+        DB::beginTransaction();
+        if (!$authAssignment->removeAuthAssignmentsById($id)) {
+            DB::rollBack();
+            return false;
+        }
+
+        if (!$this->where(['id' => $id])->delete()) {
+            DB::rollBack();
+            return false;
+        }
+        DB::commit();
+
+        return true;
     }
 }

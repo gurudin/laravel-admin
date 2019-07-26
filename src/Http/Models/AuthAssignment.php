@@ -87,4 +87,16 @@ class AuthAssignment extends Model
         
         return true;
     }
+
+    /**
+     * Remove auth assignment by user id.
+     *
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function removeAuthAssignmentsById(string $id)
+    {
+        return $this->where(['user_id' => $id])->delete();
+    }
 }

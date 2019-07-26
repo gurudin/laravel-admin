@@ -36,6 +36,7 @@ return [
         "assignment" => "Assignment",
         "nick" => "Nick",
         "email" => "Email",
+        "created-at" => "Created at",
         "administrator" => "Administrator",
         "permission" => "Permission",
         "search-for-permission" => "Search for permission",

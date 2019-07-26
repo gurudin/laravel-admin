@@ -32,12 +32,14 @@ return [
         "search-for-assigned" => "检索权限"
     ],
     "assignment" => [
-        "assignment" => "权限分配",
+        "assignment" => "用户管理",
         "nick" => "昵称",
         "email" => "邮箱",
+        "created-at" => "创建时间",
         "administrator" => "超级管理员",
         "permission" => "权限",
         "search-for-permission" => "检索权限",
+        "unrecoverable,-confirm-deletion" => "不可恢复，确认删除？",
     ],
     "menu" => [
         "menu" => "菜单",
