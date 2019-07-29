@@ -5,6 +5,9 @@ Route::prefix('admin')->group(function () {
 
         Route::get('menu', 'MenuController@index')->name('admin.menu');
         Route::get('menu/save/{id?}', 'MenuController@save')->name('admin.menu.save');
+        Route::post('menu', 'MenuController@create')->name('admin.post.menu.create');
+        Route::put('menu', 'MenuController@update')->name('admin.put.menu.update');
+        Route::delete('menu', 'MenuController@destroy')->name('admin.delete.menu.destroy');
 
         Route::get('route', 'RouteController@index')->name('admin.route');
         Route::post('route', 'RouteController@create')->name('admin.post.route.create');

@@ -54,8 +54,10 @@ return [
         "create-menu" => "创建菜单",
         "update-menu" => "编辑菜单",
         "title" => "名称",
+        "title-text" => "菜单名称",
         "order" => "排序",
         "route" => "地址",
+        "route-text" => "菜单地址",
         "parent" => "父类名称",
         "data" => "Data"
     ],

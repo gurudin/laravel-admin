@@ -7,15 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     protected $table = 'menu';
-    
     public $timestamps = false;
 
     protected $attributes = [
         'title'  => '',
-        'parent' => '',
-        'route'  => '',
+        'parent' => null,
+        'route'  => null,
         'order'  => 0,
-        'data'   => ''
+        'data'   => null
+    ];
+    protected $fillable = [
+        'title',
+        'parent',
+        'route',
+        'order',
+        'data'
     ];
 
     /**
@@ -48,6 +54,7 @@ class Menu extends Model
             }
             unset($menu);
         }
+
         return $result;
     }
 }
