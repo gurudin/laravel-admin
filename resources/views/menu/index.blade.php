@@ -42,12 +42,12 @@
         </tr>
         <tr v-for="(menu,inx) in menuListData">
           <td>@{{ menu.title }}</td>
-          <td v-html="menu.parent ? menu.parent : '<span class=\'text-muted\'>(not set)'"></td>
+          <td v-html="menu.parent ? menu.parentName : '<span class=\'text-muted\'>(not set)'"></td>
           <td v-html="menu.route ? menu.route : '<span class=\'text-muted\'>(not set)'"></td>
           <td>@{{ menu.order }}</td>
           <td>
             <button class="btn btn-xs btn-warning" @click="toEdit(menu)"><i class="fa fa-edit"></i></button>
-            <button class="btn btn-xs btn-danger"><i class="fa fa-trash-alt"></i></button>
+            <button class="btn btn-xs btn-danger" @click="remove($event, menu, inx)"><i class="fa fa-trash-alt"></i></button>
           </td>
         </tr>
       </tbody>
@@ -76,9 +76,10 @@ const vm = new Vue({
     menuListData() {
       var data = this.menuList;
       data = data.filter(row =>{
-        return String(row.title).indexOf(this.searchKey.title) > -1
-          && String(row.route).indexOf(this.searchKey.route) > -1
-          && String(row.order).indexOf(this.searchKey.order) > -1;
+        return String(row.title).toLowerCase().indexOf(this.searchKey.title) > -1
+          && String(row.route).toLowerCase().indexOf(this.searchKey.route) > -1
+          && String(row.order).indexOf(this.searchKey.order) > -1
+          && String(row.parentName).toLowerCase().indexOf(this.searchKey.parent) > -1;
       });
 
       return data;
@@ -88,6 +89,25 @@ const vm = new Vue({
     toEdit(menu) {
       window.location = new URL("{{route('admin.menu.save')}}/" + menu.id);
     },
+    remove(event, menu, inx) {
+      if (!confirm("{{__('admin::messages.common.are-you-sure-to-delete-this-item')}}")) {
+        return false;
+      }
+
+      var _this = this;
+      var $btn = $(event.currentTarget);
+      $btn.loading('<i class="fas fa-spinner fa-spin"></i>');
+      axios.delete('{{route("admin.delete.menu.destroy")}}', { data: {
+        id: menu.id
+      }}).then(function (response) {
+        if (response.data.status) {
+          _this.menuList.splice(inx, 1);
+        } else {
+          alert(response.data.msg);
+        }
+        $btn.loading("reset");
+      });
+    }
   }
 });
 </script>

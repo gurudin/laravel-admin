@@ -34,17 +34,17 @@
 
       <div class="form-group">
         <label>@lang('admin::messages.menu.parent')</label>
-        <input type="text" class="form-control" v-model.trim="menu.parent" placeholder="@lang('admin::messages.menu.parent')">
+        <input type="text" class="form-control" v-model.trim="menu.parentTitle" @keyup="parentBox = true" placeholder="@lang('admin::messages.menu.parent')">
 
         {{-- Parent list --}}
         <div class="position-relative" v-if="parentBox">
-          <div class="list-group position-absolute w-100">
-            <button type="button" class="list-group-item list-group-item-action">
-              Cras justo odio
+          <div class="list-group position-absolute w-100" style="max-height: 500px; overflow: scroll;">
+            <button type="button" class="list-group-item list-group-item-action" v-for="item in parentMenu" @click="selectParent(item)">
+              <h5 class="list-group-item-heading">@{{item.title}}</h5>
+              <span class="list-group-item-text text-muted">
+                @{{item.parentName == null ? 'null' : item.parentName}} | @{{item.route == null ? 'null' : item.route}}
+              </span>
             </button>
-            <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-            <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-            <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
           </div>
         </div>
         {{-- /Parent list --}}
@@ -52,7 +52,17 @@
 
       <div class="form-group">
         <label>@lang('admin::messages.menu.route')</label>
-        <input type="text" class="form-control" v-model.trim="menu.route" placeholder="@lang('admin::messages.menu.route-text')">
+        <input type="text" class="form-control" v-model.trim="menu.route" @keyup="routeBox = true" placeholder="@lang('admin::messages.menu.route-text')">
+
+        {{-- Parent list --}}
+        <div class="position-relative" v-if="routeBox">
+          <div class="list-group position-absolute w-100" style="max-height: 500px; overflow: scroll;">
+            <button type="button" class="list-group-item list-group-item-action" v-for="item in routesData" @click="selectRoute(item)">
+              @{{item.name}}
+            </button>
+          </div>
+        </div>
+        {{-- /Parent list --}}
       </div>
 
       <div class="form-group">
@@ -81,15 +91,45 @@ const vm = new Vue({
   data() {
     return {
       menu: @json($menu),
+      menuList: @json($menu_list),
+      routes: @json($routes),
       isValid: false,
+      parentBox: false,
+      routeBox: false,
     };
   },
   computed: {
-    parentBox() {
-      return false;
+    parentMenu() {
+      var keyWord = this.menu.parentTitle == null ? '' : this.menu.parentTitle && this.menu.parentTitle.toLowerCase();
+
+      var data = this.menuList.filter(row =>{
+        return row.route == null && row.title.toLowerCase().indexOf(keyWord) > -1;
+      });
+      
+      return keyWord == '' ? [] : data;
+    },
+    routesData() {
+      var keyWord = this.menu.route == null ? '' : this.menu.route && this.menu.route.toLowerCase();
+
+      var data = this.routes.filter(row =>{
+        return row.name.toLowerCase().indexOf(keyWord) > -1;
+      });
+
+      return data;
     },
   },
   methods: {
+    selectParent(item) {
+      this.parentBox = false;
+
+      this.menu.parentTitle = item.title;
+      this.menu.parent = item.id;
+    },
+    selectRoute(item) {
+      this.routeBox = false;
+
+      this.menu.route = item.name;
+    },
     save(event) {
       this.isValid = true;
       if (this.menu.title == '') {
@@ -118,7 +158,19 @@ const vm = new Vue({
       });
     },
     update(event) {
-      
+      var _this = this;
+      var $btn = $(event.currentTarget);
+      $btn.loading();
+      axios.put('{{route("admin.put.menu.update")}}', this.menu).then(function(response) {
+        return response.data;
+      }).then(function(resp) {
+        if (resp.status) {
+          window.location = "{{ route('admin.menu') }}";
+        } else {
+          alert(resp.msg);
+          $btn.loading("reset");
+        }
+      });
     }
   },
 });

@@ -3,6 +3,7 @@ namespace Gurudin\LaravelAdmin\Controllers;
 
 use Illuminate\Http\Request;
 use Gurudin\LaravelAdmin\Models\Menu;
+use Gurudin\LaravelAdmin\Models\AuthItem;
 
 class MenuController extends Controller
 {
@@ -17,6 +18,14 @@ class MenuController extends Controller
     public function index(Request $request, Menu $menu)
     {
         $list = $menu::orderBy('id', 'asc')->get();
+        foreach ($list as &$item) {
+            foreach ($list as $val) {
+                if ($item['parent'] == $val['id']) {
+                    $item['parentName'] = $val['title'];
+                }
+            }
+        }
+        unset($item);
         
         return view('admin::menu.index', compact('list'));
     }
@@ -28,7 +37,7 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function save(Request $request, int $id = 0)
+    public function save(Request $request, AuthItem $authItem, int $id = 0)
     {
         if ($id == 0) {
             $menu = new Menu;
@@ -36,7 +45,23 @@ class MenuController extends Controller
             $menu = Menu::where('id', $id)->first();
         }
 
-        return view('admin::menu.save', compact('menu'));
+        $menu_list = Menu::get();
+        foreach ($menu_list as &$item) {
+            foreach ($menu_list as $val) {
+                if ($item['parent'] == $val['id']) {
+                    $item['parentName'] = $val['title'];
+                }
+            }
+        }
+        unset($item);
+
+        $routes = $authItem::where(['type' => 2, 'method' => 'get'])->get();
+
+        return view('admin::menu.save', compact(
+            'menu',
+            'menu_list',
+            'routes'
+        ));
     }
 
     /**
@@ -52,5 +77,35 @@ class MenuController extends Controller
         return $menu::create($request->all())
             ? $this->response(true)
             : $this->response(false, 'Failed to create.');
+    }
+
+    /**
+     * (put) Menu update.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param Gurudin\LaravelAdmin\Models\Menu $menu
+     *
+     * @return Json
+     */
+    public function update(Request $request, Menu $menu)
+    {
+        return $menu::where(['id' => $request->all()['id']])->update($request->all())
+            ? $this->response(true)
+            : $this->response(false, 'Failed to update.');
+    }
+
+    /**
+     * (delete) Menu delete.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param Gurudin\LaravelAdmin\Models\Menu $menu
+     *
+     * @return Json
+     */
+    public function destroy(Request $request, Menu $menu)
+    {
+        return $menu::where(['id' => $request->all()['id']])->delete()
+            ? $this->response(true)
+            : $this->response(false, 'Failed to delete.');
     }
 }
