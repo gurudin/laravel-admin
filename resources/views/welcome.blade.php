@@ -4,8 +4,8 @@
 Welcome
 @endsection
 
-@section('css')
-
+@section('topbar')
+  @parent
 @endsection
 
 @section('content')
@@ -20,13 +20,4 @@ Welcome
     </a>
   </div>
 </div>
-@endsection
-
-@section('script')
-<script src="{{ URL::asset('vendor/gurudin/js/vue-2.6.10.js') }}"></script>
-<script>
-// $(function(){
-//   $('[data-toggle="tooltip"]').tooltip()
-// });
-</script>
 @endsection

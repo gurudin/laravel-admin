@@ -19,19 +19,9 @@
   <div id="lay-app">
     <div class="lay-header margin-left-220">
       <ul class="nav">
+        @section('topbar')
         <li class="nav-item float-left">
           <a class="nav-link text-secondary currsor" id="toggle-btn"><i class="fa fa-align-left"></i></a>
-        </li>
-  
-        <li class="nav-item float-left mt-2">
-          <div class="input-group input-group-sm">
-            <input type="text" class="form-control" placeholder="MeMe ID..." ref="searchUserId">
-            <div class="input-group-append">
-              <button class="btn btn-light-primary" type="button">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>
-          </div>
         </li>
   
         <li class="nav-item float-right">
@@ -45,32 +35,21 @@
             </a>
           </div>
         </li>
-
-        <li class="nav-item float-right">
-          <a class="nav-link text-secondary currsor" data-toggle="modal" data-target="#selectRegionModal">
-            <i class="fa fa-globe"></i>
-            DEFAULT
-            <span class="fa fa-angle-down"></span>
-          </a>
-        </li>
-
-        <li class="nav-item float-right">
-          <a class="nav-link text-secondary currsor">
-            <i class="fa fa-expand-arrows-alt"></i>
-          </a>
-        </li>
+        @show
       </ul>
     </div>
 
     <div class="lay-side width-220">
       <div class="lay-side-scroll">
         <p class="nav-hover"></p>
-  
+        
+        @section('logo')
         <a href="/" class="lay-logo">
           <img width="34px" height="34px" style="margin-top: -10px;" src="https://imgur.com/WTfmk2p.png" alt="">
           &nbsp;
           <span>{{ config('app.name') }}</span>
         </a>
+        @show
 
         <div class="">
           @include('admin::widget.menu', ['menus' => Gurudin\LaravelAdmin\Support\Helper::getMenu()])
