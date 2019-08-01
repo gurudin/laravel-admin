@@ -62,13 +62,84 @@ class Helper
     }
 
     /**
+     * Is permission.
+     *
+     * @param string $user_id
+     * @param array $route ( ['method' => 'get', 'route' => '/admin/route'] )
+     *
+     * @return bool
+     */
+    public static function isPermission(string $user_id, array $route)
+    {
+        $check = false;
+
+        $routes = self::getRoutes($user_id);
+        foreach ($routes as $value) {
+            $method = implode(",", $route['method']);
+            if (strcasecmp($value['child'], '/' . $route['route']) == 0
+                && strpos(strtolower($method), strtolower($value['method'])) !== false
+            ) {
+                $check = true;
+            }
+        }
+
+        if (!$check) {
+            foreach (config('admin.allow') as $value) {
+                if (strcasecmp($value['uri'], '/' . $route['route']) == 0
+                    && (
+                        strpos(strtolower($method), strtolower($value['method'])) !== false
+                        || strtolower($value['method']) == 'any'
+                    )
+                ) {
+                    $check = true;
+                }
+            }
+        }
+
+        return $check;
+    }
+
+    /**
+     * Get permissions by user
+     *
+     * @param string $user_id
+     *
+     * @return array
+     */
+    public static function getRoutes(string $user_id)
+    {
+        if ($cache = Cache::get("menu")) {
+            if (isset($cache['route-' . Auth::user()->id])) {
+                return $cache['route-' . Auth::user()->id];
+            }
+        }
+        
+        $authAssignment = new AuthAssignment;
+
+        $assigns = $authAssignment->getAuthAssignment($user_id);
+        $assigns = array_column($assigns, 'item_name');
+        if (count($assigns) == 0) {
+            return [];
+        }
+
+        $routes = [];
+        self::getFullRouteByParents($assigns, $routes);
+
+        cache(['menu' => [
+            'route-' . Auth::user()->id => $routes
+        ]], 60 * 24);
+        
+        return $routes;
+    }
+
+    /**
      * (Auth) Get user menus by (user_id)
      *
      * @param string $user_id (required)
      *
      * @return array
      */
-    public static function getMeusByUser(string $user_id)
+    private static function getMeusByUser(string $user_id)
     {
         $routes  = [];
         $menus   = [];
@@ -89,7 +160,7 @@ class Helper
      * @param array $child_item
      * @param int $pid
      */
-    public static function getMenusByChild(array $child_item, array &$menu_item)
+    private static function getMenusByChild(array $child_item, array &$menu_item)
     {
         $menu_item = array_merge($child_item, $menu_item);
         $parents = array_filter(array_column($child_item, 'parent'));
@@ -114,7 +185,45 @@ class Helper
      *
      * @return array
      */
-    public static function getRouteByParents(array $parents, array &$routes)
+    private static function getFullRouteByParents(array $parents, array &$routes)
+    {
+        $parents = array_filter(array_map(function ($value) use (&$routes) {
+            if (is_array($value)) {
+                $child = $value['child'];
+            } else {
+                $child = $value;
+            }
+
+            if ($child[0] == '/') {
+                $routes[] = $value;
+            } else {
+                return $child;
+            }
+        }, $parents));
+
+        if (empty($parents)) {
+            return false;
+        } else {
+            $item_arr = (new AuthItemChild)->getAuthItemChilds($parents);
+            
+            self::getFullRouteByParents($item_arr, $routes);
+        }
+    }
+
+    /**
+     * Get routes by parents
+     *
+     * @param array $parents = [
+     *      'parents1',
+     *      'parents2',
+     *      ...
+     * ];
+     * @param array &$routes = []
+     * @param array $fileds = []
+     *
+     * @return array
+     */
+    private static function getRouteByParents(array $parents, array &$routes)
     {
         $parents = array_filter(array_map(function ($value) use (&$routes) {
             if ($value[0] == '/') {

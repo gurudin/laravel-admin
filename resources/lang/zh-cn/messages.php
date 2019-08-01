@@ -8,7 +8,8 @@ return [
         "back" => "返回",
         "cancel" => "取消",
         "are-you-sure-to-delete-this-item" => "确认删除这条数据？",
-        "not-set" => "(not set)"
+        "not-set" => "(not set)",
+        "you-are-not-allowed-to-view-this-page" => "您没有权限查看此页面。",
     ],
     "route" => [
         "route" => "路由",

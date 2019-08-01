@@ -8,7 +8,8 @@ return [
         "back" => "Back",
         "cancel" => "Cancel",
         "are-you-sure-to-delete-this-item" => "Are you sure to delete this item?",
-        "not-set" => "(not set)"
+        "not-set" => "(not set)",
+        "you-are-not-allowed-to-view-this-page" => "You are not allowed to view this page.",
     ],
     "route" => [
         "route" => "Routes",
