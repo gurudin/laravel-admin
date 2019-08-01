@@ -1,7 +1,7 @@
 @extends('admin::layouts.blank')
 
 @section('title')
-Login
+  @lang("admin::messages.register.register")
 @endsection
 
 @section('css')
@@ -15,21 +15,23 @@ Login
       <div class="col-lg-5">
         <div class="card">
           <div class="card-header pt-4 pb-4 text-center bg-light-primary text-white h4">
-            Create Your Account
+            @lang("admin::messages.register.create-your-account")
           </div>
           
           <div class="p-4 position-relative card-body">
             <div class="text-center w-75 m-auto">
-              <p class="text-muted mb-4">Don't have an account? Create your account, it takes less than a minute</p>
+              <p class="text-muted mb-4">
+                @lang("admin::messages.register.don't-have-an-account?create-your-account,-it-takes-less-than-a-minute")
+              </p>
             </div>
             
             <form action="{{route('admin.post.register')}}" method="post">
               @csrf
 
               <div class="form-group">
-                <label>Full Name</label>
+                <label>@lang("admin::messages.register.full-name")</label>
                 <input type="text"
-                  placeholder="Enter your name"
+                  placeholder="@lang("admin::messages.register.enter-your-name")"
                   name="name"
                   class="form-control @error('name') is-invalid @enderror"
                   value="{{ old('name') }}"
@@ -42,9 +44,9 @@ Login
               </div>
 
               <div class="form-group">
-                <label>Email address</label>
+                <label>@lang("admin::messages.register.email-address")</label>
                 <input type="text"
-                  placeholder="Enter your email"
+                  placeholder="@lang("admin::messages.register.enter-your-email")"
                   name="email"
                   value="{{ old('email') }}"
                   class="form-control @error('email') is-invalid @enderror">
@@ -56,9 +58,9 @@ Login
               </div>
               
               <div class="form-group">
-                <label>Password</label>
+                <label>@lang("admin::messages.register.password")</label>
                 <input type="password"
-                  placeholder="Enter your password"
+                  placeholder="@lang("admin::messages.register.enter-your-password")"
                   name="password"
                   class="form-control @error('password') is-invalid @enderror">
                 @error('password')
@@ -69,9 +71,9 @@ Login
               </div>
 
               <div class="form-group">
-                <label>Confirm Password</label>
+                <label>@lang("admin::messages.register.confirm-password")</label>
                 <input type="password"
-                  placeholder="Confirm password"
+                  placeholder="@lang("admin::messages.register.confirm-password")"
                   name="c_password"
                   class="form-control @error('c_password') is-invalid @enderror">
                 @error('c_password')
@@ -82,7 +84,7 @@ Login
               </div>
               
               <div class="form-group">
-                <button class="btn btn-light-success">Submit</button>
+                <button class="btn btn-light-success">@lang("admin::messages.register.register")</button>
               </div>
             </form>
           </div>
@@ -92,8 +94,8 @@ Login
     
     <div class="mt-1 row">
       <div class="col-12 text-center col">
-        <p class="text-muted">Already have an account? 
-          <a class="text-muted ml-1" href="{{route('admin.login')}}"><b>Sign In</b></a>
+        <p class="text-muted">@lang("admin::messages.register.already-have-an-account?")
+          <a class="text-muted ml-1" href="{{route('admin.login')}}"><b>@lang("admin::messages.login.login")</b></a>
         </p>
       </div>
     </div>

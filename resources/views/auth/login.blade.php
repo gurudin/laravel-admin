@@ -1,7 +1,7 @@
 @extends('admin::layouts.blank')
 
 @section('title')
-Login
+  @lang("admin::messages.login.login")
 @endsection
 
 @section('css')
@@ -15,12 +15,12 @@ Login
       <div class="col-lg-5">
         <div class="card">
           <div class="card-header pt-4 pb-4 text-center bg-light-primary text-white h4">
-            Sign In
+            @lang("admin::messages.login.login")
           </div>
           
           <div class="p-4 position-relative card-body">
             <div class="text-center w-75 m-auto">
-              <p class="text-muted mb-4">Enter your email and password to access admin panel.</p>
+              <p class="text-muted mb-4">@lang("admin::messages.login.enter-your-email-and-password-to-access-admin-panel")</p>
             </div>
             
             <form action="{{route('admin.post.login')}}" method="post">
@@ -29,13 +29,12 @@ Login
               <input type="hidden" name="source" value="{{$source}}">
 
               <div class="form-group">
-                <label>Email</label>
+                <label>@lang("admin::messages.login.email")</label>
                 <input type="text"
-                  placeholder="Enter your email"
+                  placeholder="@lang("admin::messages.login.enter-your-email")"
                   autofocus
                   class="form-control @error('email') is-invalid @enderror"
-                  name="email"
-                  value="admin@admin.com">
+                  name="email">
                 @error('email')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -44,12 +43,11 @@ Login
               </div>
               
               <div class="form-group">
-                <label for="password" class="">Password</label>
+                <label for="password" class="">@lang("admin::messages.login.password")</label>
                 <input type="password"
-                  placeholder="Enter your password"
+                  placeholder="@lang("admin::messages.login.enter-your-password")"
                   class="form-control @error('password') is-invalid @enderror"
-                  name="password"
-                  value="admin123">
+                  name="password">
                 @error('password')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -58,12 +56,8 @@ Login
               </div>
               
               <div class="form-group">
-                <button class="btn btn-light-success">Submit</button>
+                <button class="btn btn-light-success">@lang("admin::messages.login.login")</button>
               </div>
-              <p>
-                <strong>Email:</strong> admin@admin.com &nbsp;&nbsp;
-                <strong>Password:</strong> admin123
-              </p>
             </form>
           </div>
         </div>
@@ -72,8 +66,8 @@ Login
     
     <div class="mt-1 row">
       <div class="col-12 text-center col">
-        <p class="text-muted">Don't have an account? 
-          <a class="text-muted ml-1" href="{{route('admin.register')}}"><b>Register</b></a>
+        <p class="text-muted">@lang("admin::messages.login.don't-have-an-account?")
+          <a class="text-muted ml-1" href="{{route('admin.register')}}"><b>@lang("admin::messages.register.register")</b></a>
         </p>
       </div>
     </div>

@@ -37,11 +37,11 @@ class RegisterController extends BaseController
             'password'   => 'required|min:6',
             'c_password' => 'required|same:password',
         ], [
-            'name.*' => '用户名最少4位.',
-            'email.unique' => '邮箱重复.',
-            'email.*' => '请填写正确Email.',
-            'password.*' => '密码最少6位.',
-            'c_password.*' => '两次密码不一致.'
+            'name.*' => __("admin::messages.register.minimum-4-digits-for-user-name"),
+            'email.unique' => __("admin::messages.register.email-to-repeat"),
+            'email.*' => __("admin::messages.register.please-fill-in-the-email-correctly"),
+            'password.*' => __("admin::messages.register.minimum-password-6-digits"),
+            'c_password.*' => __("admin::messages.register.the-passwords-don't-match-twice")
         ]);
 
         $input = $request->all();

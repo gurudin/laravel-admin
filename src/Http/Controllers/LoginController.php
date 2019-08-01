@@ -38,10 +38,10 @@ class LoginController extends BaseController
     public function login(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|string|email',
+            'email'    => 'required|string|email',
             'password' => 'required|string',
         ], [
-            'email' => '请正确填写Email.',
+            'email' => __("admin::messages.login.please-fill-in-the-email-correctly"),
         ]);
         
         if (Auth::attempt(['email' => $request->post('email'), 'password' => $request->post('password')])) {
@@ -53,7 +53,7 @@ class LoginController extends BaseController
             }
 
             return redirect($uri)
-                ->withErrors(['password' => '用户名或者密码错误.'])
+                ->withErrors(['password' => __("admin::messages.login.wrong-user-name-or-password"),])
                 ->withInput();
         }
     }
