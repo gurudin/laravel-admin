@@ -20,7 +20,7 @@
     <div class="lay-header margin-left-220">
       <ul class="nav">
         <li class="nav-item float-left">
-          <a class="nav-link text-secondary currsor" id="toggle-btn"><i class="fa fa-align-justify"></i></a>
+          <a class="nav-link text-secondary currsor" id="toggle-btn"><i class="fa fa-align-left"></i></a>
         </li>
   
         <li class="nav-item float-left mt-2">
@@ -57,20 +57,19 @@
         <li class="nav-item float-right">
           <a class="nav-link text-secondary currsor">
             <i class="fa fa-expand-arrows-alt"></i>
-            {{-- <i class="fa fa-compress-arrows-alt"></i> --}}
           </a>
         </li>
       </ul>
     </div>
 
-    <div class="lay-side">
+    <div class="lay-side width-220">
       <div class="lay-side-scroll">
         <p class="nav-hover"></p>
   
         <a href="/" class="lay-logo">
-          <img width="34px" height="34px" style="margin-top: -10px;" src="http://cms-dev-admin.meme.chat/images/logo_grey.png" alt="">
+          <img width="34px" height="34px" style="margin-top: -10px;" src="https://imgur.com/WTfmk2p.png" alt="">
           &nbsp;
-          <span>MeMe Admin</span>
+          <span>{{ config('app.name') }}</span>
         </a>
 
         <div class="">
@@ -91,6 +90,35 @@
     $(function() {
       $(".uri-to").click(function() {
         $(this).next('.lay-nav-child').slideToggle(200);
+      });
+
+      $('[data-toggle="tooltip"]').tooltip();
+      $("#toggle-btn").click(function() {
+        if ($(this).children('i').attr('class') == 'fa fa-align-right') {
+          $(this).children('i').attr('class', 'fa fa-align-left');
+          $(".margin-left-60").each(function() {
+            $(this).removeClass('margin-left-60').addClass('margin-left-220');
+          });
+          $(".padding-left-60").each(function() {
+            $(this).removeClass('padding-left-60').addClass('padding-left-220');
+          });
+          $(".width-60").each(function() {
+            $(this).removeClass('width-60').addClass('width-220');
+          });
+          $("cite").show();
+        } else {
+          $(this).children('i').attr('class', 'fa fa-align-right');
+          $(".margin-left-220").each(function() {
+            $(this).removeClass('margin-left-220').addClass('margin-left-60');
+          });
+          $(".padding-left-220").each(function() {
+            $(this).removeClass('padding-left-220').addClass('padding-left-60');
+          });
+          $(".width-220").each(function() {
+            $(this).removeClass('width-220').addClass('width-60');
+          });
+          $("cite").hide();
+        }
       });
 
       function isOpen() {

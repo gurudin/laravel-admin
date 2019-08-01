@@ -21,3 +21,12 @@ Welcome
   </div>
 </div>
 @endsection
+
+@section('script')
+<script src="{{ URL::asset('vendor/gurudin/js/vue-2.6.10.js') }}"></script>
+<script>
+// $(function(){
+//   $('[data-toggle="tooltip"]').tooltip()
+// });
+</script>
+@endsection

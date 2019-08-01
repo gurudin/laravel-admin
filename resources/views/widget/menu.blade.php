@@ -3,7 +3,8 @@
   <li class="lay-menu-item">
     <a href="{{$menu['route'] ? explode('{', $menu['route'])[0] : 'javascript:;'}}"
       class="{{ isset($menu['children']) ? 'uri-to' : '' }}">
-      <i class="{{$menu['data']['icon'] ? $menu['data']['icon'] : 'fa'}}"></i>
+      <i class="{{$menu['data']['icon'] ? $menu['data']['icon'] : 'fa'}}"
+        data-toggle="tooltip" data-placement="left" title="{{$menu['title']}}"></i>
       <cite>{{$menu['title']}}</cite>
       <span class="{{ isset($menu['children']) ? 'fa fa-caret-down' : 'fa' }}"></span>
     </a>
