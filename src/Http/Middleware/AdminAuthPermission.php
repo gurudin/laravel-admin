@@ -8,7 +8,7 @@ use Gurudin\LaravelAdmin\Support\Helper;
 
 class AdminAuthPermission
 {
-    private $redirectTo = '\Gurudin\LaravelAdmin\Controllers\LoginController@loginFrom';
+    private $redirectTo = 'admin.login';
 
     private $current;
 
@@ -19,6 +19,10 @@ class AdminAuthPermission
             'uri'    => Route::current()->uri,
             'name'   => Route::currentRouteName(),
         ];
+
+        if (config('admin.not_login_redirect') != '') {
+            $this->redirectTo = config('admin.not_login_redirect');
+        }
     }
 
     /**
@@ -32,7 +36,7 @@ class AdminAuthPermission
     public function handle(\Illuminate\Http\Request $request, Closure $next)
     {
         if (!Auth::check()) {
-            return redirect()->action($this->redirectTo, ['source' => $this->current['uri']]);
+            return redirect()->route($this->redirectTo, ['source' => $this->current['uri']]);
         }
 
         /**
@@ -48,13 +52,13 @@ class AdminAuthPermission
         if (!Helper::isPermission(
             Auth::user()->id, [
                 'method' => $this->current['method'],
-                'route' => $this->current['uri']
+                'route'  => $this->current['uri']
             ])
         ) {
             if ($request->ajax()) {
                 response()->json([
                     'code' => 403,
-                    'msg' => __('admin::messages.common.you-are-not-allowed-to-view-this-page')
+                    'msg'  => __('admin::messages.common.you-are-not-allowed-to-view-this-page')
                 ], 403);
             }
 
@@ -62,7 +66,7 @@ class AdminAuthPermission
                 ? response()->view(config('admin.403_view'))
                 : response()->json([
                     'code' => 403,
-                    'msg' => __('admin::messages.common.you-are-not-allowed-to-view-this-page')
+                    'msg'  => __('admin::messages.common.you-are-not-allowed-to-view-this-page')
                 ], 403);
         }
 

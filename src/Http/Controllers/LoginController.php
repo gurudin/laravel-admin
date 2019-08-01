@@ -19,11 +19,13 @@ class LoginController extends BaseController
      */
     public function loginFrom(Request $request)
     {
-        if (Auth::check()) {
-            return redirect()->route('admin.welcome');
-        }
-
         $source = $request->source;
+
+        if (Auth::check()) {
+            return $source
+                ? redirect()->route($source)
+                : redirect()->route(config('login_successful_redirect'));
+        }
 
         return view('admin::auth.login', compact('source'));
     }
@@ -45,7 +47,11 @@ class LoginController extends BaseController
         ]);
         
         if (Auth::attempt(['email' => $request->post('email'), 'password' => $request->post('password')])) {
-            return redirect()->route('admin.welcome');
+            if (is_null($request->source)) {
+                return redirect()->route(config('admin.login_successful_redirect'));
+            } else {
+                return redirect($request->source);
+            }
         } else {
             $uri = 'admin/login';
             if (!empty($request->source)) {
