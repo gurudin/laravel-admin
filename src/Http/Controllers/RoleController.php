@@ -54,6 +54,7 @@ class RoleController extends Controller
     {
         $count = $authItem->where([
             'name' => $request->all()['name'],
+            'type' => $request->all()['type'],
             'method' => ($request->all()['method'] ? $request->all()['method'] : '')
         ])->count();
 

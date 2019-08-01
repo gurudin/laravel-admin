@@ -37,6 +37,7 @@ class PermissionController extends Controller
         if ($data['type'] == 'create') {
             $count = $authItem->where([
                 'name' => $data['new']['name'],
+                'type' => $data['new']['type'],
                 'method' => ($data['new']['method'] ? $data['new']['method'] : '')
             ])->count();
 

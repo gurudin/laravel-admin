@@ -18,7 +18,7 @@ class CreateAuthItemTable extends Migration
             $table->string('method', 20);
             $table->tinyInteger('type');
             $table->text('description')->nullable();
-            $table->primary(['name', 'method']);
+            $table->primary(['name', 'method', 'type']);
             $table->index('type', 'inx_type');
         });
     }
