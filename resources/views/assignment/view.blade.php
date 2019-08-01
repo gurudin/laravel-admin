@@ -150,10 +150,8 @@ const vm = new Vue({
       var $btn = $(event.currentTarget);
       $btn.loading('<i class="fas fa-spinner fa-spin"></i>');
       axios.delete('{{route("admin.delete.assignment.batchAssignment")}}', {
-        data: _this.assignments
+        data: _this.active.assigned
       }).then(function (response) {
-        console.log(response);
-        
         _this.active.assigned.forEach(row =>{
           for (let i = _this.assignments.length - 1; i >= 0; i--) {
             if (row.item_name == _this.assignments[i].item_name) {

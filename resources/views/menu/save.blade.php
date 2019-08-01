@@ -34,7 +34,7 @@
 
       <div class="form-group">
         <label>@lang('admin::messages.menu.parent')</label>
-        <input type="text" class="form-control" v-model.trim="menu.parentTitle" @keyup="parentBox = true" placeholder="@lang('admin::messages.menu.parent')">
+        <input type="text" class="form-control" v-model.trim="menu.parentName" @keyup="parentBox = true" placeholder="@lang('admin::messages.menu.parent')">
 
         {{-- Parent list --}}
         <div class="position-relative" v-if="parentBox">
@@ -100,7 +100,7 @@ const vm = new Vue({
   },
   computed: {
     parentMenu() {
-      var keyWord = this.menu.parentTitle == null ? '' : this.menu.parentTitle && this.menu.parentTitle.toLowerCase();
+      var keyWord = this.menu.parentName == null ? '' : this.menu.parentName && this.menu.parentName.toLowerCase();
 
       var data = this.menuList.filter(row =>{
         return row.route == null && row.title.toLowerCase().indexOf(keyWord) > -1;
@@ -122,7 +122,7 @@ const vm = new Vue({
     selectParent(item) {
       this.parentBox = false;
 
-      this.menu.parentTitle = item.title;
+      this.menu.parentName = item.title;
       this.menu.parent = item.id;
     },
     selectRoute(item) {

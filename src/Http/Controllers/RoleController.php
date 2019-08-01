@@ -4,6 +4,7 @@ namespace Gurudin\LaravelAdmin\Controllers;
 use Illuminate\Http\Request;
 use Gurudin\LaravelAdmin\Models\AuthItem;
 use Gurudin\LaravelAdmin\Models\AuthItemChild;
+use Gurudin\LaravelAdmin\Support\Helper;
 
 class RoleController extends Controller
 {
@@ -74,6 +75,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, AuthItem $authItem)
     {
+        Helper::removeCache('menu');
+
         return $authItem->setItem(array_merge(['type' => 'update'], $request->all()))
             ? $this->response(true)
             : $this->response(false);
@@ -88,6 +91,8 @@ class RoleController extends Controller
      */
     public function destroy(Request $request, AuthItem $authItem)
     {
+        Helper::removeCache('menu');
+        
         return $authItem->removeItem($request->all())
             ? $this->response(true)
             : $this->response(false);

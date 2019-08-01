@@ -3,7 +3,6 @@
 namespace Gurudin\LaravelAdmin\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Gurudin\LaravelAdmin\Support\Helper;
 use Gurudin\LaravelAdmin\Models\User;
 use Gurudin\LaravelAdmin\Models\AuthItem;
@@ -125,6 +124,8 @@ class AssignmentController extends Controller
      */
     public function batchCreateAssignment(Request $request, AuthAssignment $authAssignment)
     {
+        Helper::removeCache('menu');
+
         return $authAssignment->createAuthAssignments($request->all())
             ? $this->response(true)
             : $this->response(false);
@@ -140,6 +141,8 @@ class AssignmentController extends Controller
      */
     public function batchRemoveAssignment(Request $request, AuthAssignment $authAssignment)
     {
+        Helper::removeCache('menu');
+
         return $authAssignment->removeAuthAssignments($request->all())
             ? $this->response(true)
             : $this->response(false);

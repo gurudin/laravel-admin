@@ -4,6 +4,7 @@ namespace Gurudin\LaravelAdmin\Controllers;
 use Illuminate\Http\Request;
 use Gurudin\LaravelAdmin\Models\Menu;
 use Gurudin\LaravelAdmin\Models\AuthItem;
+use Gurudin\LaravelAdmin\Support\Helper;
 
 class MenuController extends Controller
 {
@@ -47,6 +48,9 @@ class MenuController extends Controller
 
         $menu_list = Menu::get();
         foreach ($menu_list as &$item) {
+            if ($item['id'] == $menu['parent']) {
+                $menu['parentName'] = $item['title'];
+            }
             foreach ($menu_list as $val) {
                 if ($item['parent'] == $val['id']) {
                     $item['parentName'] = $val['title'];
@@ -89,7 +93,12 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        return $menu::where(['id' => $request->all()['id']])->update($request->all())
+        Helper::removeCache('menu');
+
+        $input = $request->all();
+        unset($input['parentName']);
+
+        return $menu::where(['id' => $request->all()['id']])->update($input)
             ? $this->response(true)
             : $this->response(false, 'Failed to update.');
     }
@@ -104,6 +113,8 @@ class MenuController extends Controller
      */
     public function destroy(Request $request, Menu $menu)
     {
+        Helper::removeCache('menu');
+
         return $menu::where(['id' => $request->all()['id']])->delete()
             ? $this->response(true)
             : $this->response(false, 'Failed to delete.');

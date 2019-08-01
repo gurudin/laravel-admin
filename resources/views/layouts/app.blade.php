@@ -40,10 +40,6 @@
             <i class="fa fa-caret-down"></i>
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-size: 13px;">
-            <h6 class="dropdown-header text-dark">Welcome !</h6>
-            <a class="dropdown-item text-secondary" href="#">
-              <i class="fa fa-cog"></i>&nbsp;&nbsp;Settings
-            </a>
             <a class="dropdown-item text-secondary" href="{{ route('admin.logout') }}">
               <i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp;Logout
             </a>
@@ -78,153 +74,7 @@
         </a>
 
         <div class="">
-          <ul class="lay-menu">
-            <li class="lay-menu-item">
-              <a href="">
-                <i class="fa fa-cubes"></i>
-                <cite>App Config</cite>
-                <span class="fa fa-caret-down"></span>
-              </a>
-              <dl class="lay-nav-child" style="display: none;">
-                <dd>
-                  <a href="javascript:;" class="uri-to">
-                    <cite>Agents</cite>
-                    <span></span>
-                  </a>
-                </dd>
-                <dd>
-                  <a href="javascript:;" class="uri-to">
-                    <cite>Article Management</cite>
-                    <span class="fa fa-caret-down"></span>
-                  </a>
-                  <dl class="lay-nav-child" style="display: none;">
-                    <dd>
-                      <a href="javascript:;" class="uri-to">
-                        <cite>Agents</cite>
-                        <span></span>
-                      </a>
-                    </dd>
-                    <dd>
-                      <a href="javascript:;" class="uri-to">
-                        <cite>Article Management</cite>
-                        <span></span>
-                      </a>
-                    </dd>
-                  </dl>
-                </dd>
-              </dl>
-            </li>
-            
-            <li class="lay-menu-item">
-              <a href="">
-                <i class="fa fa-cubes"></i>
-                <cite>App Config</cite>
-                <span class="fa fa-caret-down"></span>
-              </a>
-              <dl class="lay-nav-child" style="display: none;">
-                <dd>
-                  <a href="javascript:;" class="uri-to">
-                    <cite>Agents</cite>
-                    <span></span>
-                  </a>
-                </dd>
-                <dd>
-                  <a href="javascript:;" class="uri-to">
-                    <cite>Article Management</cite>
-                    <span></span>
-                  </a>
-                </dd>
-              </dl>
-            </li>
-
-            <li class="lay-menu-item">
-              <a href="">
-                <i class="fa fa-cubes"></i>
-                <cite>App Config</cite>
-                <span class="fa fa-caret-down"></span>
-              </a>
-              <dl class="lay-nav-child" style="display: none;">
-                <dd>
-                  <a href="javascript:;" class="uri-to">
-                    <cite>Agents</cite>
-                    <span></span>
-                  </a>
-                </dd>
-                <dd>
-                  <a href="javascript:;" class="uri-to">
-                    <cite>Article Management</cite>
-                    <span></span>
-                  </a>
-                </dd>
-              </dl>
-            </li>
-
-            <li class="lay-menu-item">
-              <a href="">
-                <i class="fa fa-sliders-h"></i>
-                <cite>System & Permission</cite>
-                <span class="fa fa-caret-down"></span>
-              </a>
-              <dl class="lay-nav-child" style="display: block;">
-                <dd>
-                  <a href="{{ route('admin.assignment') }}" class="uri-to">
-                    <i class="fa"></i>
-                    <cite>Users</cite>
-                    <span class="fa"></span>
-                  </a>
-                </dd>
-                <dd>
-                  <a href="javascript:;" class="uri-to">
-                    <i class="fa"></i>
-                    <cite>Menu</cite>
-                    <span class="fa fa-caret-down"></span>
-                  </a>
-                  <dl class="lay-nav-child" style="display: block;">
-                    <dd>
-                      <a href="{{ route('admin.menu') }}" class="uri-to">
-                        <i class="fa"></i>
-                        <cite>List</cite>
-                      </a>
-                    </dd>
-                    <dd>
-                      <a href="javascript:;" class="uri-to">
-                        <i class="fa"></i>
-                        <cite>Create</cite>
-                      </a>
-                    </dd>
-                  </dl>
-                </dd>
-                <dd>
-                  <a href="javascript:;" class="uri-to">
-                    <i class="fa"></i>
-                    <cite>Permissions</cite>
-                    <span class="fa fa-caret-down"></span>
-                  </a>
-
-                  <dl class="lay-nav-child" style="display: block;">
-                    <dd>
-                      <a href="{{ route('admin.route') }}" class="uri-to">
-                        <i class="fa"></i>
-                        <cite>Routes</cite>
-                      </a>
-                    </dd>
-                    <dd>
-                      <a href="{{ route('admin.permission') }}" class="uri-to">
-                        <i class="fa"></i>
-                        <cite>Permission</cite>
-                      </a>
-                    </dd>
-                    <dd>
-                      <a href="{{ route('admin.role') }}" class="uri-to">
-                        <i class="fa"></i>
-                        <cite>Role</cite>
-                      </a>
-                    </dd>
-                  </dl>
-                </dd>
-              </dl>
-            </li>
-          </ul>  
+          @include('admin::widget.menu', ['menus' => Gurudin\LaravelAdmin\Support\Helper::getMenu()])
         </div>
       </div>
     </div>
@@ -236,5 +86,26 @@
   
   <script src="{{ URL::asset('vendor/gurudin/js/admin.js') }}"></script> 
   @yield('script')
+
+  <script>
+    $(function() {
+      $(".uri-to").click(function() {
+        $(this).next('.lay-nav-child').slideToggle(200);
+      });
+
+      function isOpen() {
+        var current = window.location.pathname;
+        var alist = $(".lay-menu a");
+        $.each(alist, function (i) {
+          if (current == $(this).attr('href')) {
+            $(this).css({'color': 'white', 'font-weight': 600});
+            $(this).parents('.lay-nav-child').show();
+          }
+        });
+      }
+
+      isOpen();
+    });
+  </script>
 </body>
 </html>

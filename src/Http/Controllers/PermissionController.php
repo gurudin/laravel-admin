@@ -4,6 +4,7 @@ namespace Gurudin\LaravelAdmin\Controllers;
 use Illuminate\Http\Request;
 use Gurudin\LaravelAdmin\Models\AuthItem;
 use Gurudin\LaravelAdmin\Models\AuthItemChild;
+use Gurudin\LaravelAdmin\Support\Helper;
 
 class PermissionController extends Controller
 {
@@ -59,6 +60,8 @@ class PermissionController extends Controller
      */
     public function destroy(Request $request, AuthItem $authItem)
     {
+        Helper::removeCache('menu');
+
         return $authItem->removeItem($request->all())
             ? $this->response(true)
             : $this->response(false, 'Failed to delete.');
@@ -96,6 +99,8 @@ class PermissionController extends Controller
      */
     public function batchCreateRouteChild(Request $request, AuthItemChild $authItemChild)
     {
+        Helper::removeCache('menu');
+        
         return $authItemChild->saveItemChild($request->all())
             ? $this->response(true)
             : $this->response(false, 'Failed to create.');
@@ -110,6 +115,8 @@ class PermissionController extends Controller
      */
     public function batchRemoveRouteChild(Request $request, AuthItemChild $authItemChild)
     {
+        Helper::removeCache('menu');
+
         return $authItemChild->removeItemChild($request->all())
             ? $this->response(true)
             : $this->response(false, 'Failed to delete.');

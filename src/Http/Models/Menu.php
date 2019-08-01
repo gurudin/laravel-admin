@@ -57,4 +57,28 @@ class Menu extends Model
 
         return $result;
     }
+
+    /**
+     * Get menus by fileds
+     *
+     * @param array $arr = [ (required)
+     *      '/menu',
+     *      '/route',
+     *      ...
+     * ];
+     * @param string $key = (id or route ro parent)
+     *
+     * @return array
+     */
+    public function getMenuByFiled(array $arr, $key = 'id')
+    {
+        $result = [];
+        $this->orderBy('order', 'desc')->whereIn($key, $arr)->chunk(100, function ($items) use (&$result) {
+            foreach ($items as $item) {
+                $result[] = $item->toArray();
+            }
+        });
+        
+        return $result;
+    }
 }
