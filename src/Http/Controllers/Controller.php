@@ -10,6 +10,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->middleware('admin');
@@ -18,19 +21,21 @@ class Controller extends BaseController
     /**
      * Ajax response
      *
-     * @param bool $status
-     * @param array $data = []
-     * @param string $msg = ''
-     * @param int $header_code = 200
+     * @param bool   $status 
+     * @param string $msg 
+     * @param array  $data 
+     * @param int    $header_code 
      *
      * @return Json
      */
     protected function response(bool $status, string $msg = 'success', array $data = [], int $header_code = 200)
     {
-        return response()->json([
-            'status' => $status,
-            'msg'    => $msg,
-            'data'   => $data
-        ], $header_code);
+        return response()->json(
+            [
+                'status' => $status,
+                'msg'    => $msg,
+                'data'   => $data
+            ], $header_code
+        );
     }
 }

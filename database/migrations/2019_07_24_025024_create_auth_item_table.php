@@ -13,14 +13,17 @@ class CreateAuthItemTable extends Migration
      */
     public function up()
     {
-        Schema::create('auth_item', function (Blueprint $table) {
-            $table->string('name', 64);
-            $table->string('method', 20);
-            $table->tinyInteger('type');
-            $table->text('description')->nullable();
-            $table->primary(['name', 'method', 'type']);
-            $table->index('type', 'inx_type');
-        });
+        Schema::create(
+            'auth_item',
+            function (Blueprint $table) {
+                $table->string('name', 64);
+                $table->string('method', 20);
+                $table->tinyInteger('type');
+                $table->text('description')->nullable();
+                $table->primary(['name', 'method', 'type']);
+                $table->index('type', 'inx_type');
+            }
+        );
     }
 
     /**

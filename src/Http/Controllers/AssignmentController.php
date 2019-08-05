@@ -13,8 +13,8 @@ class AssignmentController extends Controller
     /**
      * (view) Assignment index
      *
-     * @param Illuminate\Http\Request $request
-     * @param Gurudin\LaravelAdmin\Models\User $user
+     * @param Illuminate\Http\Request          $request 
+     * @param Gurudin\LaravelAdmin\Models\User $user 
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -32,11 +32,11 @@ class AssignmentController extends Controller
     /**
      * (view) Assignment view
      *
-     * @param Illuminate\Http\Request $request
-     * @param Gurudin\Admin\Models\AuthItem $authItem
-     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment
-     * @param Gurudin\LaravelAdmin\Models\User $user
-     * @param string $id
+     * @param Illuminate\Http\Request                    $request 
+     * @param Gurudin\Admin\Models\AuthItem              $authItem 
+     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment 
+     * @param Gurudin\LaravelAdmin\Models\User           $user 
+     * @param string                                     $id 
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -52,15 +52,22 @@ class AssignmentController extends Controller
         $items['roles']       = $authItem->getRole();
         $userDetail           = $user->getUser($id);
 
-        return view('admin::assignment.view', compact('userDetail', 'items', 'assignments'));
+        return view(
+            'admin::assignment.view',
+            compact(
+                'userDetail',
+                'items',
+                'assignments'
+            )
+        );
     }
 
     /**
      * (view) User edit.
      *
-     * @param Illuminate\Http\Request $request
-     * @param Gurudin\LaravelAdmin\Models\User $user
-     * @param string $id
+     * @param Illuminate\Http\Request          $request 
+     * @param Gurudin\LaravelAdmin\Models\User $user 
+     * @param string                           $id 
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -74,8 +81,8 @@ class AssignmentController extends Controller
     /**
      * (put) User update.
      *
-     * @param Illuminate\Http\Request $request
-     * @param Gurudin\LaravelAdmin\Models\User $user
+     * @param Illuminate\Http\Request          $request 
+     * @param Gurudin\LaravelAdmin\Models\User $user 
      *
      * @return Json
      */
@@ -84,12 +91,13 @@ class AssignmentController extends Controller
         $req = $request->all();
         if ($req['type'] == 'nick') {
             if (strlen($req['data']['name']) < 2) {
-                return $this->response(false, __('admin::messages.assignment.nick-length-error'));
+                return $this->response(
+                    false,
+                    __('admin::messages.assignment.nick-length-error')
+                );
             }
 
-            if ($user->where(['id' => $req['data']['id']])->update([
-                'name' => $req['data']['name']
-            ])) {
+            if ($user->where(['id' => $req['data']['id']])->update(['name' => $req['data']['name']])) {
                 return $this->response(true);
             } else {
                 return $this->response(true, 'Failed to update.');
@@ -98,15 +106,19 @@ class AssignmentController extends Controller
 
         if ($req['type'] == 'password') {
             if (strlen($req['data']['password']) < 6) {
-                return $this->response(false, __('admin::messages.assignment.password-length-error'));
+                return $this->response(
+                    false,
+                    __('admin::messages.assignment.password-length-error')
+                );
             }
             if ($req['data']['password'] != $req['data']['c_password']) {
-                return $this->response(false, __('admin::messages.assignment.password-match-error'));
+                return $this->response(
+                    false,
+                    __('admin::messages.assignment.password-match-error')
+                );
             }
 
-            if ($user->where(['id' => $req['data']['id']])->update([
-                'password' => bcrypt($req['data']['password'])
-            ])) {
+            if ($user->where(['id' => $req['data']['id']])->update(['password' => bcrypt($req['data']['password'])])) {
                 return $this->response(true);
             } else {
                 return $this->response(true, 'Failed to update.');
@@ -117,13 +129,15 @@ class AssignmentController extends Controller
     /**
      * (post) Batch create Assignments.
      *
-     * @param Illuminate\Http\Request $request
-     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment
+     * @param Illuminate\Http\Request                    $request 
+     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment 
      * 
      * @return Json
      */
-    public function batchCreateAssignment(Request $request, AuthAssignment $authAssignment)
-    {
+    public function batchCreateAssignment(
+        Request $request,
+        AuthAssignment $authAssignment
+    ) {
         Helper::removeCache('menu');
 
         return $authAssignment->createAuthAssignments($request->all())
@@ -134,13 +148,15 @@ class AssignmentController extends Controller
     /**
      * (post) Batch remove Assignments.
      *
-     * @param Illuminate\Http\Request $request
-     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment
+     * @param Illuminate\Http\Request                    $request 
+     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment 
      * 
      * @return Json
      */
-    public function batchRemoveAssignment(Request $request, AuthAssignment $authAssignment)
-    {
+    public function batchRemoveAssignment(
+        Request $request,
+        AuthAssignment $authAssignment
+    ) {
         Helper::removeCache('menu');
 
         return $authAssignment->removeAuthAssignments($request->all())
@@ -151,14 +167,17 @@ class AssignmentController extends Controller
     /**
      * (delete) Destroy user.
      *
-     * @param Illuminate\Http\Request $request
-     * @param Gurudin\LaravelAdmin\Models\User $user
-     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment
+     * @param Illuminate\Http\Request                    $request 
+     * @param Gurudin\LaravelAdmin\Models\AuthAssignment $authAssignment 
+     * @param Gurudin\LaravelAdmin\Models\User           $user 
      *
      * @return Json
      */
-    public function destroy(Request $request, AuthAssignment $authAssignment, User $user)
-    {
+    public function destroy(
+        Request $request,
+        AuthAssignment $authAssignment,
+        User $user
+    ) {
         return $user->removeUser($authAssignment, $request->all()['id'])
             ? $this->response(true)
             : $this->response(false, 'Failed to delete.');

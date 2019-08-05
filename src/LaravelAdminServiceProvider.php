@@ -22,32 +22,46 @@ class LaravelAdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /** Add middleware */
+        /** 
+         * Add middleware
+         */
         Route::aliasMiddleware('admin', AdminAuthPermission::class);
 
-        /** Add route address */
+        /**
+         * Add route address
+         */
         $this->loadRoutesFrom(__DIR__ . '/../routes/admin.php');
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(__DIR__ . '/../routes/admin.php');
 
-        /** Add views */
+        /**
+         * Add views
+         */
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'admin');
 
-        /** Add migrations */
+        /**
+         * Add migrations
+         */
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        /** Add translations */
+        /**
+         * Add translations
+         */
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'admin');
 
-        /** Publishes static resources */
-        $this->publishes([
-            __DIR__ . '/../public' => public_path('vendor/gurudin'),
-        ], 'gurudin-admin');
+        /**
+         * Publishes static resources
+         */
+        $this->publishes(
+            [__DIR__ . '/../public' => public_path('vendor/gurudin')],
+            'gurudin-admin'
+        );
 
-        $this->publishes([
-            __DIR__ . '/../config/admin.php' => config_path('admin.php'),
-        ], 'gurudin-admin-config');
+        $this->publishes(
+            [__DIR__ . '/../config/admin.php' => config_path('admin.php')],
+            'gurudin-admin-config'
+        );
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ return [
     | 不需要检测权限的路由
     |
     | example:
-    |  
+    |
     | 'allow' => [
     |   ['method' => 'get', 'uri' => '/admin/welcome'],
     |   ['method' => 'post', 'uri' => '/admin/welcome'],

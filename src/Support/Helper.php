@@ -8,6 +8,16 @@ use Gurudin\LaravelAdmin\Models\AuthAssignment;
 use Gurudin\LaravelAdmin\Models\AuthItemChild;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * Helper
+ * 帮助类
+ *
+ * @category Helper
+ * @package  LaravelAdmin
+ * @author   Gurudin <hc.gaoxiang@gmail.com>
+ * @license  https://github.com/gurudin/laravel-admin/blob/master/LICENSE MIT
+ * @link     https://github.com/gurudin/laravel-admin
+ */
 class Helper
 {
     /**
@@ -17,13 +27,15 @@ class Helper
      */
     public static function isAdmin()
     {
-        return in_array(Auth::user()->email, config('admin.admin_email')) ? true : false;
+        return in_array(Auth::user()->email, config('admin.admin_email'))
+            ? true
+            : false;
     }
 
     /**
      * Remove cache
      *
-     * @param string $key='menu'
+     * @param string $key Cache key
      *
      * @return void
      */
@@ -34,8 +46,6 @@ class Helper
 
     /**
      * Get menu.
-     *
-     * @param Gurudin\LaravelAdmin\Models\Menu $menu
      *
      * @return array
      */
@@ -54,9 +64,12 @@ class Helper
         }
 
         $menus = self::recursion($list);
-        cache(['menu' => [
-            'menu-' . Auth::user()->id => $menus
-        ]], 60 * 24);
+        cache(
+            [
+                'menu' => ['menu-' . Auth::user()->id => $menus]
+            ],
+            60 * 24
+        );
 
         return $menus;
     }
@@ -64,8 +77,8 @@ class Helper
     /**
      * Is permission.
      *
-     * @param string $user_id
-     * @param array $route ( ['method' => 'get', 'route' => '/admin/route'] )
+     * @param string $user_id Current logged-in user id
+     * @param array  $route   (['method' => 'get', 'route' => '/admin/route'])
      *
      * @return bool
      */
@@ -86,10 +99,7 @@ class Helper
         if (!$check) {
             foreach (config('admin.allow') as $value) {
                 if (strcasecmp($value['uri'], '/' . $route['route']) == 0
-                    && (
-                        strpos(strtolower($method), strtolower($value['method'])) !== false
-                        || strtolower($value['method']) == 'any'
-                    )
+                    && (strpos(strtolower($method), strtolower($value['method'])) !== false || strtolower($value['method']) == 'any')
                 ) {
                     $check = true;
                 }
@@ -102,7 +112,7 @@ class Helper
     /**
      * Get permissions by user
      *
-     * @param string $user_id
+     * @param string $user_id user id
      *
      * @return array
      */
@@ -125,9 +135,10 @@ class Helper
         $routes = [];
         self::getFullRouteByParents($assigns, $routes);
 
-        cache(['menu' => [
-            'route-' . Auth::user()->id => $routes
-        ]], 60 * 24);
+        cache(
+            ['menu' => ['route-' . Auth::user()->id => $routes]],
+            60 * 24
+        );
         
         return $routes;
     }
@@ -157,8 +168,10 @@ class Helper
     /**
      * Get menus by childs
      *
-     * @param array $child_item
-     * @param int $pid
+     * @param array $child_item Child item
+     * @param int   $menu_item  Menu item
+     *
+     * @return viod
      */
     private static function getMenusByChild(array $child_item, array &$menu_item)
     {
@@ -173,33 +186,39 @@ class Helper
     }
 
     /**
-     * Get routes by parents
+     * Get full routes by parents
      *
-     * @param array $parents = [
+     * @param array $parents Parents
+     * @param array $routes  Routes
+     * 
+     * @example $parents = [
      *      'parents1',
      *      'parents2',
      *      ...
      * ];
-     * @param array &$routes = []
-     * @param array $fileds = []
      *
      * @return array
      */
     private static function getFullRouteByParents(array $parents, array &$routes)
     {
-        $parents = array_filter(array_map(function ($value) use (&$routes) {
-            if (is_array($value)) {
-                $child = $value['child'];
-            } else {
-                $child = $value;
-            }
+        $parents = array_filter(
+            array_map(
+                function ($value) use (&$routes) {
+                    if (is_array($value)) {
+                        $child = $value['child'];
+                    } else {
+                        $child = $value;
+                    }
 
-            if ($child[0] == '/') {
-                $routes[] = $value;
-            } else {
-                return $child;
-            }
-        }, $parents));
+                    if ($child[0] == '/') {
+                        $routes[] = $value;
+                    } else {
+                        return $child;
+                    }
+                },
+                $parents
+            )
+        );
 
         if (empty($parents)) {
             return false;
@@ -213,25 +232,30 @@ class Helper
     /**
      * Get routes by parents
      *
-     * @param array $parents = [
+     * @param array $parents Parents
+     * @param array $routes  Routes
+     * 
+     * @example $parents = [
      *      'parents1',
      *      'parents2',
      *      ...
      * ];
-     * @param array &$routes = []
-     * @param array $fileds = []
      *
      * @return array
      */
     private static function getRouteByParents(array $parents, array &$routes)
     {
-        $parents = array_filter(array_map(function ($value) use (&$routes) {
-            if ($value[0] == '/') {
-                $routes[] = $value;
-            } else {
-                return $value;
-            }
-        }, $parents));
+        $parents = array_filter(
+            array_map(
+                function ($value) use (&$routes) {
+                    if ($value[0] == '/') {
+                        $routes[] = $value;
+                    } else {
+                        return $value;
+                    }
+                }, $parents
+            )
+        );
         if (empty($parents)) {
             return false;
         } else {
@@ -245,16 +269,16 @@ class Helper
     private static function recursion(array $list)
     {
         $items = [];
-        foreach($list as $value){
+        foreach ($list as $value) {
             $items[$value['id']] = $value;
         }
 
         static $tree = [];
-        foreach($items as $key => &$value){
+        foreach ($items as $key => &$value) {
             $value['data'] = json_decode($value['data'], true);
-            if(isset($items[$value['parent']])){
+            if (isset($items[$value['parent']])) {
                 $items[$value['parent']]['children'][] = &$items[$key];
-            }else{
+            } else {
                 $tree[] = &$items[$key];
             }
         }

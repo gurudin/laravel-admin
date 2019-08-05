@@ -1,4 +1,5 @@
 <?php
+
 namespace Gurudin\LaravelAdmin\Middleware;
 
 use Closure;
@@ -8,35 +9,41 @@ use Gurudin\LaravelAdmin\Support\Helper;
 
 class AdminAuthPermission
 {
-    private $redirectTo = 'admin.login';
+    private $_redirectTo = 'admin.login';
 
-    private $current;
+    private $_current;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
-        $this->current = [
+        $this->_current = [
             'method' => Route::current()->methods,
             'uri'    => Route::current()->uri,
             'name'   => Route::currentRouteName(),
         ];
 
         if (config('admin.not_login_redirect') != '') {
-            $this->redirectTo = config('admin.not_login_redirect');
+            $this->_redirectTo = config('admin.not_login_redirect');
         }
     }
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request 
+     * @param \Closure                 $next    
      *
      * @return mixed
      */
     public function handle(\Illuminate\Http\Request $request, Closure $next)
     {
         if (!Auth::check()) {
-            return redirect()->route($this->redirectTo, ['source' => $this->current['uri']]);
+            return redirect()->route(
+                $this->_redirectTo,
+                ['source' => $this->_current['uri']]
+            );
         }
 
         /**
@@ -49,25 +56,32 @@ class AdminAuthPermission
         /**
          * Check permissions.
          */
-        if (!Helper::isPermission(
-            Auth::user()->id, [
-                'method' => $this->current['method'],
-                'route'  => $this->current['uri']
-            ])
-        ) {
+        $isPermission = Helper::isPermission(
+            Auth::user()->id,
+            [
+                'method' => $this->_current['method'],
+                'route'  => $this->_current['uri']
+            ]
+        );
+
+        if (!$isPermission) {
             if ($request->ajax()) {
-                response()->json([
-                    'code' => 403,
-                    'msg'  => __('admin::messages.common.you-are-not-allowed-to-view-this-page')
-                ], 403);
+                response()->json(
+                    [
+                        'code' => 403,
+                        'msg'  => __('admin::messages.common.you-are-not-allowed-to-view-this-page')
+                    ], 403
+                );
             }
 
             return config('admin.403_view')
                 ? response()->view(config('admin.403_view'))
-                : response()->json([
-                    'code' => 403,
-                    'msg'  => __('admin::messages.common.you-are-not-allowed-to-view-this-page')
-                ], 403);
+                : response()->json(
+                    [
+                        'code' => 403,
+                        'msg'  => __('admin::messages.common.you-are-not-allowed-to-view-this-page')
+                    ], 403
+                );
         }
 
         return $next($request);

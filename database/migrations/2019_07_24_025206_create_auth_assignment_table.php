@@ -13,12 +13,15 @@ class CreateAuthAssignmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('auth_assignment', function (Blueprint $table) {
-            $table->string('item_name', 64);
-            $table->string('user_id', 64);
-            $table->primary(['item_name', 'user_id']);
-            $table->index('user_id', 'inx_user_id');
-        });
+        Schema::create(
+            'auth_assignment',
+            function (Blueprint $table) {
+                $table->string('item_name', 64);
+                $table->string('user_id', 64);
+                $table->primary(['item_name', 'user_id']);
+                $table->index('user_id', 'inx_user_id');
+            }
+        );
     }
 
     /**

@@ -13,15 +13,18 @@ class CreateMenuTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title', 128);
-            $table->integer('parent')->nullable();
-            $table->string('route', 255)->nullable();
-            $table->integer('order')->nullable();
-            $table->string('data', 255)->nullable();
-            $table->index('parent', 'inx_parent');
-        });
+        Schema::create(
+            'menu',
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('title', 128);
+                $table->integer('parent')->nullable();
+                $table->string('route', 255)->nullable();
+                $table->integer('order')->nullable();
+                $table->string('data', 255)->nullable();
+                $table->index('parent', 'inx_parent');
+            }
+        );
     }
 
     /**
