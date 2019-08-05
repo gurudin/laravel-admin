@@ -84,8 +84,10 @@ return [
         "create-menu" => "Create Menu",
         "update-menu" => "Update Menu",
         "title" => "Title",
+        "title-text" => "Menu name",
         "order" => "Order",
         "route" => "Route",
+        "route-text" => "Route",
         "parent" => "Parent Name",
         "data" => "Data"
     ],

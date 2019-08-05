@@ -11,7 +11,7 @@
   <title>@yield('title') {{ config('app.name', '') }}</title>
   
   <link href="{{ URL::asset('vendor/gurudin/css/admin.css') }}" rel="stylesheet">
-  <link href="{{ URL::asset('css/custom.css?v='. time()) }}" rel="stylesheet">
+  <link href="{{ URL::asset('vendor/gurudin/css/custom.css') }}" rel="stylesheet">
 
   @yield('css')
 </head>

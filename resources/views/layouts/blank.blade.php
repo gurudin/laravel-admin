@@ -12,7 +12,7 @@
   
   @yield('css')
 
-  <link href="{{ URL::asset('css/custom.css?v='. time()) }}" rel="stylesheet">
+  <link href="{{ URL::asset('vendor/gurudin/css/custom.css') }}" rel="stylesheet">
 </head>
 <body>
   

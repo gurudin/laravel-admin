@@ -115,7 +115,7 @@ const vm = new Vue({
         return row.name.toLowerCase().indexOf(keyWord) > -1;
       });
 
-      return data;
+      return keyWord == '' ? [] : data;
     },
   },
   methods: {
